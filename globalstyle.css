@@ -1,0 +1,7 @@
+:root {
+  --trim-color: #FFB31C;
+}
+
+a {
+  color: var(--trim-color);
+}
