@@ -3,7 +3,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body, footer {
+body, footer, main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,11 +15,15 @@ h1 {
 }
 
 body > *:not(:last-child) {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 footer > *:not(:last-child) {
   margin-bottom: 0.5rem;
+}
+
+main > *:not(:last-child) {
+  margin-bottom: 1rem;
 }
 
 #logo {
