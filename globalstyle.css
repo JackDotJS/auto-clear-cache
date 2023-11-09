@@ -9,22 +9,16 @@
   --ease-out-func: cubic-bezier(0, 0.55, 0.45, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --light-color: #503016;
-    --light-hover: #724623;
-    --dark-color: #F9EBBB;
-    --dark-hover: #FFF;
-    --trim-color: #E79915;
-    --link-color: #2FA1A2;
-    --toggle-color: #56A22F;
-    --ease-out-func: cubic-bezier(0, 0.55, 0.45, 1);
-  }
-}
-
 html {
   background-color: var(--light-color);
   color: var(--dark-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Logo */
+
+#logo-light {
+  display: none;
 }
 
 /* Links */
@@ -99,7 +93,11 @@ button {
   transition-timing-function: var(--ease-out-func);
 }
 
-button:hover {
+button:disabled {
+  opacity: 0.33;
+}
+
+button:not(:disabled):hover {
   background-color: var(--dark-hover);
 }
 
@@ -111,4 +109,38 @@ button .arrow {
   transform: rotate(-45deg);
   margin-left: 6px;
   margin-right: 3px;
+}
+
+/* Website Links */
+
+#links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#links > *:not(:last-child) {
+  margin-right: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --light-color: #503016;
+    --light-hover: #724623;
+    --dark-color: #F9EBBB;
+    --dark-hover: #FFF;
+    --trim-color: #E79915;
+    --link-color: #2FA1A2;
+    --toggle-color: #56A22F;
+    --ease-out-func: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+
+  #logo-dark {
+    display: none;
+  }
+
+  #logo-light {
+    display: initial;
+  }
 }

@@ -1,6 +1,5 @@
 body {
   margin: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body, footer, main {
@@ -14,43 +13,18 @@ h1 {
   margin: 0;
 }
 
-body > *:not(:last-child) {
-  margin-bottom: 1.5rem;
+body {
+  gap: 1.5rem;
 }
 
-footer > *:not(:last-child) {
-  margin-bottom: 0.5rem;
+footer {
+  gap: 0.5rem;
 }
 
-main > *:not(:last-child) {
-  margin-bottom: 1rem;
+main {
+  gap: 1rem;
 }
 
 #logo-dark, #logo-light {
   width: 128px;
-}
-
-#logo-light {
-  display: none;
-}
-
-#links {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#links > *:not(:last-child) {
-  margin-right: 1rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  #logo-dark {
-    display: none;
-  }
-
-  #logo-light {
-    display: initial;
-  }
 }

@@ -3,11 +3,44 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <script src="popup.js"></script>
-  <style src="../globalstyle.css"></style>
+  <script type="module" src="options.js"></script>
+  <link rel="stylesheet" href="../globalstyle.css" />
+  <link rel="stylesheet" href="options.css" />
 </head>
 
 <body>
-
+  <header>
+    <img id="logo-light" src="../icon/light_256x.png">
+    <img id="logo-dark" src="../icon/dark_256x.png">
+    <h1>Auto Clear Cache</h1>
+    <footer>
+      <span id="ext-version">Version ...</span>
+      <div id="links">
+        <a href="https://github.com/JackDotJS/auto-clear-cache">GitHub</a>
+        <a href="https://jackdotjs.github.io/">My Website</a>
+      </div>
+    </footer>
+  </header>
+  <main>
+    <h2>Clearing Options</h2>
+    <p>
+      Clear browser data every
+      <input type="number" id="interval-units" min="1" max="999" value="1"/>
+      <select id="interval-type">
+        <option value="day">day</option>
+        <option value="week">week</option>
+        <option value="month">month</option>
+        <option value="year">year</option>
+      </select>
+    </p>
+    <div class="button-row">
+      <button id="save-button" disabled>Save Changes</button>
+      <button id="discard-button" disabled>Discard Changes</button>
+    </div>
+    <div class="button-row">
+      <button id="import-button">Import Options</button>
+      <button id="export-button">Export Options</button>
+    </div>
+  </main>
 </body>
 </html>
