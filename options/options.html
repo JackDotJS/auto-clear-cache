@@ -22,25 +22,96 @@
     </footer>
   </header>
   <main>
-    <h2>Clearing Options</h2>
-    <p>
-      Clear browser data every
-      <input type="number" id="interval-units" min="1" max="999" value="1"/>
-      <select id="interval-type">
-        <option value="day">day</option>
-        <option value="week">week</option>
-        <option value="month">month</option>
-        <option value="year">year</option>
-      </select>
-    </p>
-    <div class="button-row">
-      <button id="save-button" disabled>Save Changes</button>
-      <button id="discard-button" disabled>Discard Changes</button>
-    </div>
-    <div class="button-row">
-      <button id="import-button">Import Options</button>
-      <button id="export-button">Export Options</button>
-    </div>
+    <section>
+      <h2>Clearing Options</h2>
+      <div>
+        Clear browser data every
+        <input type="number" id="interval-units" min="1" max="999" value="1"/>
+        <select id="interval-type">
+          <option value="day">day</option>
+          <option value="week">week</option>
+          <option value="month">month</option>
+          <option value="year">year</option>
+        </select>
+      </div>
+      <div>
+        <div class="toggle">
+          <span>Always ask for confirmation before clearing</span>
+          <input id="askmode" type="checkbox"/>
+          <label for="askmode"></label>
+        </div>
+      </div>
+      <div>
+        <div class="toggle">
+          <span>Clear data while browser is still open <b>(NOT RECOMMENDED)</b></span>
+          <input id="clearwhileopen" type="checkbox"/>
+          <label for="clearwhileopen"></label>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Notification Options</h2>
+      <div>
+        <div class="toggle">
+          <span>Enable Notifications</span>
+          <input id="notif-enabled" type="checkbox"/>
+          <label for="notif-enabled"></label>
+        </div>
+      </div>
+      <div></div>
+      <div>
+        <div class="toggle">
+          <span>Data successfully cleared</span>
+          <input id="notif-success" type="checkbox"/>
+          <label for="notif-success"></label>
+        </div>
+      </div>
+      <div>
+        <div class="toggle">
+          <span>An error occurred, preventing data removal</span>
+          <input id="notif-error" type="checkbox"/>
+          <label for="notif-error"></label>
+        </div>
+      </div>
+      <div>
+        <div class="toggle">
+          <span>Upcoming data removal reminders</span>
+          <input id="notif-reminder" type="checkbox"/>
+          <label for="notif-reminder"></label>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Sync Options</h2>
+      <div>
+        <div class="toggle">
+          <span>Use Sync</span>
+          <input id="sync-toggle" type="checkbox"/>
+          <label for="sync-toggle"></label>
+        </div>
+      </div>
+      <div class="button-row">
+        <button id="sync-overwrite-remote" disabled>Overwrite Cloud Data</button>
+        <button id="sync-overwrite-local" disabled>Overwrite Local Data</button>
+      </div>
+    </section>
+
+    <section>
+      <div class="button-row">
+        <button id="save-button" disabled>Save Changes</button>
+        <button id="discard-button" disabled>Discard Changes</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Import/Export Options</h2>
+      <div class="button-row">
+        <button id="import-button">Import</button>
+        <button id="export-button">Export</button>
+      </div>
+    </section>
   </main>
 </body>
 </html>

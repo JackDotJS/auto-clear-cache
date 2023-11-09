@@ -38,11 +38,18 @@ footer {
   gap: 0.5rem;
 }
 
-main {
+main, section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   width: 30rem;
+}
+
+main {
+  gap: 1rem;
+}
+
+section {
+  gap: 0.5rem;
 }
 
 .button-row {
