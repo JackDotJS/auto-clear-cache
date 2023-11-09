@@ -9,6 +9,19 @@
   --ease-out-func: cubic-bezier(0, 0.55, 0.45, 1);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --light-color: #503016;
+    --light-hover: #724623;
+    --dark-color: #F9EBBB;
+    --dark-hover: #FFF;
+    --trim-color: #E79915;
+    --link-color: #2FA1A2;
+    --toggle-color: #56A22F;
+    --ease-out-func: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+}
+
 html {
   background-color: var(--light-color);
   color: var(--dark-color);

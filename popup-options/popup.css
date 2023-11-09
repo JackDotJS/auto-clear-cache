@@ -26,8 +26,12 @@ main > *:not(:last-child) {
   margin-bottom: 1rem;
 }
 
-#logo {
+#logo-dark, #logo-light {
   width: 128px;
+}
+
+#logo-light {
+  display: none;
 }
 
 #links {
@@ -39,4 +43,14 @@ main > *:not(:last-child) {
 
 #links > *:not(:last-child) {
   margin-right: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  #logo-dark {
+    display: none;
+  }
+
+  #logo-light {
+    display: initial;
+  }
 }
