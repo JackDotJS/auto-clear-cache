@@ -6,6 +6,7 @@
   --trim-color: #E79915;
   --link-color: #2FA1A2;
   --toggle-color: #56A22F;
+  --ease-out-func: cubic-bezier(0, 0.55, 0.45, 1);
 }
 
 html {
@@ -44,7 +45,8 @@ a {
   border-style: solid;
   border-color: var(--dark-color);
   background-color: var(--dark-color);
-  transition: 200ms;
+  transition-duration: 125ms;
+  transition-timing-function: var(--ease-out-func);
 }
 
 .toggle > label:after {
@@ -57,7 +59,8 @@ a {
   aspect-ratio: 1 / 1;
   border-radius: 100%;
   background-color: var(--light-color);
-  transition: 200ms;
+  transition-duration: 125ms;
+  transition-timing-function: var(--ease-out-func);
 }
 
 .toggle > input:checked + label {
@@ -79,7 +82,8 @@ button {
   border: none;
   padding: 0.5rem 1rem;
   font-size: medium;
-  transition: 75ms;
+  transition-duration: 66ms;
+  transition-timing-function: var(--ease-out-func);
 }
 
 button:hover {
