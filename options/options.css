@@ -2,16 +2,16 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100%;
 }
 
 body {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin: 0 20rem;
+  margin: 1rem 20rem;
   gap: 4rem;
 }
 
@@ -21,10 +21,19 @@ header {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  min-width: 20rem;
 }
 
 header h1 {
   margin: 0;
+}
+
+header img {
+  width: 200px;
+}
+
+header button {
+  width: 100%;
 }
 
 footer {
@@ -45,14 +54,23 @@ main, section {
 }
 
 main {
-  gap: 1rem;
+  gap: 2.5rem;
 }
 
 section {
-  gap: 0.5rem;
+  gap: 1rem;
+}
+
+h2 {
+  margin: 0.5rem 0;
+  font-size: 28px;
+  font-weight: 500;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 0.5rem;
 }
 
 .button-row {
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;

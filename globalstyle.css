@@ -9,10 +9,28 @@
   --ease-out-func: cubic-bezier(0, 0.55, 0.45, 1);
 }
 
+/* General Rules */
+
 html {
   background-color: var(--light-color);
   color: var(--dark-color);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.disabled, button:disabled {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.toggle > input[type="checkbox"], .checkbox-grid input[type="checkbox"] {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
 }
 
 /* Logo */
@@ -33,19 +51,8 @@ a {
 .toggle {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-}
-
-.toggle > input {
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
 }
 
 .toggle > label {
@@ -99,10 +106,6 @@ button {
   transition-timing-function: var(--ease-out-func);
 }
 
-button:disabled {
-  opacity: 0.33;
-}
-
 button:not(:disabled):hover {
   background-color: var(--dark-hover);
 }
@@ -129,6 +132,51 @@ button .arrow {
 #links > *:not(:last-child) {
   margin-right: 1rem;
 }
+
+/* Checkbox Grid */
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 0;
+}
+
+.checkbox-grid > label {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-grid > label > label {
+  width: 1rem;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border: 2px solid var(--dark-color);
+  border-radius: 0.2rem;
+}
+
+.checkbox-grid > label > input:checked + label {
+  background-color: var(--dark-color);
+}
+
+.checkbox-grid > label > input + label:after {
+  content: "";
+  display: block;
+}
+
+.checkbox-grid > label > input:checked + label:after {
+  width: 30%;
+  height: 60%;
+  margin-top: 3%;
+  margin-left: 28%;
+  border: solid var(--light-color);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* Dark Theme */
 
 @media (prefers-color-scheme: dark) {
   :root {
