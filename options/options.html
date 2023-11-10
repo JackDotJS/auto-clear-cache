@@ -26,7 +26,7 @@
   <main>
     <section>
       <h2>Data Removal</h2>
-      <div>
+      <div id="interval">
         Clear browser data every
         <input type="number" id="interval-units" min="1" max="999" value="1"/>
         <select id="interval-type">
@@ -35,43 +35,78 @@
           <option value="month">month</option>
           <option value="year">year</option>
         </select>
+        starting on
+        <input id="timesync" type="date" />
       </div>
-      <div class="checkbox-grid">
-        <label>
-          <input id="datatype-cache" type="checkbox"/>
-          <label for="datatype-cache"></label>
-          Cache
-        </label>
-        <label>
-          <input id="datatype-cookies" type="checkbox"/>
-          <label for="datatype-cookies"></label>
-          Cookies
-        </label>
-        <label>
-          <input id="datatype-downloads" type="checkbox"/>
-          <label for="datatype-downloads"></label>
-          Downloads
-        </label>
-        <label>
-          <input id="datatype-formdata" type="checkbox"/>
-          <label for="datatype-formdata"></label>
-          Form Data
-        </label>
-        <label>
-          <input id="datatype-history" type="checkbox"/>
-          <label for="datatype-history"></label>
-          History
-        </label>
-        <label>
-          <input id="datatype-localstorage" type="checkbox"/>
-          <label for="datatype-localstorage"></label>
-          Local Storage
-        </label>
-        <label>
-          <input id="datatype-passwords" type="checkbox"/>
-          <label for="datatype-passwords"></label>
-          Passwords
-        </label>
+      <div id="datatype-select">
+        Data types to remove:
+        <div class="checkbox-grid">
+          <label>
+            <input id="datatype-cache" type="checkbox"/>
+            <label for="datatype-cache"></label>
+            Cache
+          </label>
+          <label>
+            <input id="datatype-cookies" type="checkbox"/>
+            <label for="datatype-cookies"></label>
+            Cookies
+          </label>
+          <label>
+            <input id="datatype-downloads" type="checkbox"/>
+            <label for="datatype-downloads"></label>
+            Downloads
+          </label>
+          <label>
+            <input id="datatype-formdata" type="checkbox"/>
+            <label for="datatype-formdata"></label>
+            Form Data
+          </label>
+          <label>
+            <input id="datatype-history" type="checkbox"/>
+            <label for="datatype-history"></label>
+            History
+          </label>
+          <label>
+            <input id="datatype-localstorage" type="checkbox"/>
+            <label for="datatype-localstorage"></label>
+            Local Storage
+          </label>
+          <label>
+            <input id="datatype-passwords" type="checkbox"/>
+            <label for="datatype-passwords"></label>
+            Passwords
+          </label>
+        </div>
+      </div>
+      <label class="toggle">
+        <span role="presentation">Only clear data added within a time range</span>
+        <input id="clearrecent" type="checkbox"/>
+        <label for="clearrecent" aria-hidden="true"></label>
+      </label>
+      <div id="data-clear-range" class="disabled">
+        Clear data added within the previous
+        <input type="number" id="clear-range-units" min="1" max="999" value="1"/>
+        <select id="clear-range-type">
+          <option value="day">day</option>
+          <option value="week">week</option>
+          <option value="month">month</option>
+          <option value="year">year</option>
+        </select>
+      </div>
+      <label class="toggle">
+        <span role="presentation">Only clear data from specific websites</span>
+        <input id="usehostnames" type="checkbox"/>
+        <label for="usehostnames" aria-hidden="true"></label>
+      </label>
+      <div class="list-creator disabled">
+        <p>Note: Hostnames must be exact. No wildcards (*).</p>
+        <ul id="hostnames-list">
+          <li>
+            <input type="text" placeholder="https://www.example.com/"/>
+            <button></button>
+          </li>
+        </ul>
+        <button>Add</button>
       </div>
       <label class="toggle">
         <span role="presentation">Always ask for confirmation before clearing</span>
@@ -107,6 +142,23 @@
         <input id="notif-reminder" type="checkbox"/>
         <label for="notif-reminder" aria-hidden="true"></label>
       </label>
+      <div class="list-creator disabled">
+        <ul id="reminders-list">
+          <li>
+            Remind me
+            <input type="number" min="1" max="999" value="1"/>
+            <select>
+              <option value="day">day</option>
+              <option value="week">week</option>
+              <option value="month">month</option>
+              <option value="year">year</option>
+            </select>
+            before removal
+            <button></button>
+          </li>
+        </ul>
+        <button>Add</button>
+      </div>
     </section>
 
     <section>
