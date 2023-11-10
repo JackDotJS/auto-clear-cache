@@ -34,64 +34,50 @@
           <option value="year">year</option>
         </select>
       </div>
-      <div>
-        <div class="toggle">
-          <span>Always ask for confirmation before clearing</span>
-          <input id="askmode" type="checkbox"/>
-          <label for="askmode"></label>
-        </div>
-      </div>
-      <div>
-        <div class="toggle">
-          <span>Clear data while browser is still open <b>(NOT RECOMMENDED)</b></span>
-          <input id="clearwhileopen" type="checkbox"/>
-          <label for="clearwhileopen"></label>
-        </div>
-      </div>
+      <label class="toggle">
+        <span role="presentation">Always ask for confirmation before clearing</span>
+        <input id="askmode" type="checkbox"/>
+        <label for="askmode" aria-hidden="true"></label>
+      </label>
+      <label class="toggle">
+        <span role="presentation">Clear data while browser is still open <b>(NOT RECOMMENDED)</b></span>
+        <input id="clearwhileopen" type="checkbox"/>
+        <label for="clearwhileopen" aria-hidden="true"></label>
+      </label>
     </section>
 
     <section>
       <h2>Notification Options</h2>
-      <div>
-        <div class="toggle">
-          <span>Enable Notifications</span>
-          <input id="notif-enabled" type="checkbox"/>
-          <label for="notif-enabled"></label>
-        </div>
-      </div>
-      <div></div>
-      <div>
-        <div class="toggle">
-          <span>Data successfully cleared</span>
-          <input id="notif-success" type="checkbox"/>
-          <label for="notif-success"></label>
-        </div>
-      </div>
-      <div>
-        <div class="toggle">
-          <span>An error occurred, preventing data removal</span>
-          <input id="notif-error" type="checkbox"/>
-          <label for="notif-error"></label>
-        </div>
-      </div>
-      <div>
-        <div class="toggle">
-          <span>Upcoming data removal reminders</span>
-          <input id="notif-reminder" type="checkbox"/>
-          <label for="notif-reminder"></label>
-        </div>
-      </div>
+      <label class="toggle">
+        <span role="presentation">Enable Notifications</span>
+        <input id="notif-enabled" type="checkbox"/>
+        <label for="notif-enabled" aria-hidden="true"></label>
+      </label>
+      <div class="spacer"></div>
+      <label class="toggle">
+        <span role="presentation">Data successfully cleared</span>
+        <input id="notif-success" type="checkbox"/>
+        <label for="notif-success" aria-hidden="true"></label>
+      </label>
+      <label class="toggle">
+        <span role="presentation">An error occurred, preventing data removal</span>
+        <input id="notif-error" type="checkbox"/>
+        <label for="notif-error" aria-hidden="true"></label>
+      </label>
+      <label class="toggle">
+        <span role="presentation">Upcoming data removal reminders</span>
+        <input id="notif-reminder" type="checkbox"/>
+        <label for="notif-reminder" aria-hidden="true"></label>
+      </label>
     </section>
 
     <section>
       <h2>Sync Options</h2>
-      <div>
-        <div class="toggle">
-          <span>Use Sync</span>
-          <input id="sync-toggle" type="checkbox"/>
-          <label for="sync-toggle"></label>
-        </div>
-      </div>
+      <label class="toggle">
+        <span role="presentation">Use Sync</span>
+        <input id="sync-toggle" type="checkbox"/>
+        <label for="sync-toggle" aria-hidden="true"></label>
+      </label>
       <div class="button-row">
         <button id="sync-overwrite-remote" disabled>Overwrite Cloud Data</button>
         <button id="sync-overwrite-local" disabled>Overwrite Local Data</button>
