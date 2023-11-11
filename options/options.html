@@ -29,7 +29,7 @@
       <div id="interval">
         Clear browser data every
         <input type="number" id="interval-units" min="1" max="999" value="1"/>
-        <select id="interval-type">
+        <select id="interval-type" class="time-type">
           <option value="day">day</option>
           <option value="week">week</option>
           <option value="month">month</option>
@@ -86,7 +86,7 @@
       <div id="data-clear-range" class="disabled">
         Clear data added within the previous
         <input type="number" id="clear-range-units" min="1" max="999" value="1"/>
-        <select id="clear-range-type">
+        <select id="clear-range-type" class="time-type">
           <option value="day">day</option>
           <option value="week">week</option>
           <option value="month">month</option>
@@ -147,7 +147,7 @@
           <li>
             Remind me
             <input type="number" min="1" max="999" value="1"/>
-            <select>
+            <select class="time-type">
               <option value="day">day</option>
               <option value="week">week</option>
               <option value="month">month</option>

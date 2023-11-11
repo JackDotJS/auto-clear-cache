@@ -102,7 +102,7 @@ input[type="number"], select, input[type="date"] {
   padding: 0.33rem;
 }
 
-#interval-type, .reminder-time-type {
+.time-type {
   width: 6rem;
   font-size: 16px;
 }
