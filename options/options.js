@@ -197,17 +197,10 @@ setupListCreator(newHostnameButton, hostnameList, (newHostname) => {
   });
 });
 
-// ask for confirmation
+// dont ask for confirmation
 
-const askmodeElem = document.getElementById(`askmode`);
-askmodeElem.addEventListener(`change`, (e) => {
-  markChanged();
-});
-
-// clear while open
-
-const clearWhileOpenElem = document.getElementById(`clearwhileopen`);
-clearWhileOpenElem.addEventListener(`change`, (e) => {
+const noConfirmElem = document.getElementById(`no-confirm`);
+noConfirm.addEventListener(`change`, (e) => {
   markChanged();
 });
 

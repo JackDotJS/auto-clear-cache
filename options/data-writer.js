@@ -25,6 +25,7 @@ const defaultOptions = {
       "https://example.com"
     ]
   },
+  never_ask_confirm: false,
   notifications: {
     success: true,
     failure: true,
