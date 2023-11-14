@@ -25,6 +25,11 @@ main {
   gap: 1rem;
 }
 
+main > .toggle {
+  align-items: center;
+  gap: 0.5rem;
+}
+
 #logo-dark, #logo-light {
   width: 128px;
 }
