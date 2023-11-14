@@ -17,7 +17,7 @@
   outline-width: 2px;
   outline-style: solid;
   outline-color: transparent;
-  transition-duration: 32ms;
+  transition-duration: 200ms;
   transition-timing-function: var(--ease-out-func);
 }
 
@@ -39,6 +39,10 @@ html {
 .disabled, button:disabled {
   opacity: 0.25;
   pointer-events: none;
+}
+
+.disabled button:disabled {
+  opacity: 1;
 }
 
 .toggle > input[type="checkbox"],
@@ -299,9 +303,10 @@ input[type="number"] {
   overflow-y: scroll;
   padding: 0;
   margin: 0;
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.1) 50%);
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.05) 50%);
   background-size: 6rem 6rem;
   background-repeat: repeat;
+  background-attachment: local;
 }
 
 .list-creator > ul > li {

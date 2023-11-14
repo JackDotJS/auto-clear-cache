@@ -67,7 +67,7 @@ section > * {
   margin-bottom: 1rem;
 }
 
-.subsection > * {
+.grouped > * {
   margin-bottom: 0.5rem;
 }
 
@@ -99,7 +99,7 @@ h2 {
   margin-top: 0.5rem;
 }
 
-#hostnames-list > li > input {
+#hostnames-list input {
   height: 100%;
   width: 20rem;
   padding: 0.4rem;

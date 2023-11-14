@@ -40,7 +40,7 @@
         starting on
         <input id="timesync" type="date" />
       </div>
-      <div id="datatype-select" class="subsection">
+      <div id="datatype-select" class="grouped">
         <span>Data types to remove:</span>
         <div class="checkbox-grid">
           <label>
@@ -80,7 +80,7 @@
           </label>
         </div>
       </div>
-      <div class="subsection">
+      <div class="grouped">
         <label class="toggle">
           <span role="presentation">Only clear recent data</span>
           <input id="clearrecent" type="checkbox"/>
@@ -97,17 +97,17 @@
           </select>
         </div>
       </div>
-      <div class="subsection">
+      <div class="grouped">
         <label class="toggle">
           <span role="presentation">Only clear data from specific websites</span>
           <input id="usehostnames" type="checkbox"/>
           <label for="usehostnames" aria-hidden="true"></label>
         </label>
-        <div class="list-creator disabled">
+        <div id="hostnames-list" class="list-creator disabled">
           <span>Note: Hostnames must be exact. No wildcards (*).</span>
-          <ul id="hostnames-list">
+          <ul>
             <li>
-              <input type="text" placeholder="https://www.example.com/"/>
+              <input type="text" placeholder="https://"/>
               <button></button>
             </li>
           </ul>
@@ -143,14 +143,14 @@
         <input id="notif-error" type="checkbox"/>
         <label for="notif-error" aria-hidden="true"></label>
       </label>
-      <div class="subsection">
+      <div class="grouped">
         <label class="toggle disabled">
           <span role="presentation">Upcoming data removal reminders</span>
           <input id="notif-reminder" type="checkbox"/>
           <label for="notif-reminder" aria-hidden="true"></label>
         </label>
-        <div class="list-creator disabled">
-          <ul id="reminders-list">
+        <div id="reminders-list" class="list-creator disabled">
+          <ul>
             <li>
               Remind me
               <input type="number" min="1" max="999" value="1"/>
@@ -171,7 +171,7 @@
 
     <section>
       <h2>Cloud Sync</h2>
-      <div class="subsection">
+      <div class="grouped">
         <label class="toggle">
           <span role="presentation">Use Cloud Sync</span>
           <input id="sync-toggle" type="checkbox"/>
