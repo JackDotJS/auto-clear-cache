@@ -14,14 +14,16 @@
 
 * {
   outline-offset: 0;
-  outline-width: 0;
+  outline-width: 2px;
   outline-style: solid;
   outline-color: transparent;
-  transition-duration: 66ms;
+  transition-duration: 32ms;
   transition-timing-function: var(--ease-out-func);
 }
 
-*:where(:focus, :focus-visible) {
+*:focus-visible,
+.toggle > input:focus-visible + label,
+.checkbox-grid > label > input:focus-visible + label {
   outline-offset: 2px;
   outline-width: 2px;
   outline-style: solid;
@@ -63,10 +65,10 @@ input[type="text"] {
   font-size: 16px;
 }
 
-input[type="number"]:where(:hover, :focus, :focus-visible),
-select:where(:hover, :focus, :focus-visible),
-input[type="date"]:where(:hover, :focus, :focus-visible),
-input[type="text"]:where(:hover, :focus, :focus-visible) {
+input[type="number"]:where(:hover, :focus-visible),
+select:where(:hover, :focus-visible),
+input[type="date"]:where(:hover, :focus-visible),
+input[type="text"]:where(:hover, :focus-visible) {
   background-color: var(--dark-hover);
   color: var(--light-hover);
 }
