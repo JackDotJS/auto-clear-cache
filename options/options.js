@@ -200,7 +200,7 @@ setupListCreator(newHostnameButton, hostnameList, (newHostname) => {
 // dont ask for confirmation
 
 const noConfirmElem = document.getElementById(`no-confirm`);
-noConfirm.addEventListener(`change`, (e) => {
+noConfirmElem.addEventListener(`change`, (e) => {
   markChanged();
 });
 
