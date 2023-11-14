@@ -11,7 +11,7 @@ body {
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  margin: 4rem 20rem;
+  margin: 4rem;
   gap: 4rem;
 }
 
@@ -21,7 +21,8 @@ header {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  min-width: 20rem;
+  width: 20rem;
+  max-width: 40rem;
 }
 
 header h1 {
@@ -50,7 +51,8 @@ footer {
 main, section {
   display: flex;
   flex-direction: column;
-  width: 40rem;
+  max-width: 40rem;
+  width: 100%;
 }
 
 main {
@@ -61,6 +63,14 @@ section {
   gap: 1rem;
 }
 
+section > * {
+  margin-bottom: 1rem;
+}
+
+.subsection > * {
+  margin-bottom: 0.5rem;
+}
+
 h2 {
   margin: 0.5rem 0;
   font-size: 28px;
@@ -69,37 +79,11 @@ h2 {
   padding-bottom: 0.5rem;
 }
 
-.button-row {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.button-row > * {
-  width: 100%;
-}
-
 #interval {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
-}
-
-input[type="number"] {
-  width: 3.5rem;
-  font-size: 16px;
-}
-
-input[type="number"], select, input[type="date"] {
-  background-color: var(--dark-color);
-  color: var(--light-color);
-  border: none;
-  border-radius: 0.2rem;
-  padding: 0.33rem;
 }
 
 .time-type {
@@ -115,66 +99,38 @@ input[type="number"], select, input[type="date"] {
   margin-top: 0.5rem;
 }
 
-.list-creator {
-  background-color: rgba(0,0,0,0.33);
-  padding: 1rem;
-  border-radius: 0.25rem;
+#hostnames-list > li > input {
+  height: 100%;
+  width: 20rem;
+  padding: 0.4rem;
+  box-sizing: border-box;
 }
 
-.list-creator > * {
-  width: 100%;
-}
+@media screen and (max-width: 1200px) {
+  html {
+    display: initial;
+  }
 
-.list-creator > ul {
-  list-style-type: none;
-  width: 100%;
-  min-height: calc(3rem * 4);
-  max-height: calc(3rem * 8);
-  overflow-y: scroll;
-  padding: 0;
-  margin: 0 0 1rem;
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.1) 50%);
-  background-size: 6rem 6rem;
-  background-repeat: repeat;
-}
+  body {
+    margin: 0;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.list-creator > ul > li {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 3rem;
-  gap: 0.5rem;
-}
+  header {
+    width: 100%;
+  }
 
-.list-creator > ul > li:first-of-type > button {
-  width: auto;
-  height: calc(100% - 1rem);
-  aspect-ratio: 1 / 1;
-  position: relative;
-  margin-left: auto;
-  margin-right: 0.5rem;
-}
+  header img {
+    width: 100px;
+  }
 
-.list-creator > ul > li:first-of-type > button:before,
-.list-creator > ul > li:first-of-type > button:after {
-  content: "";
-  display: block;
-  position: absolute;
-  background-color: currentColor;
-  width: 66%;
-  height: 3px;
-}
-
-.list-creator > ul > li:first-of-type > button:before {
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-.list-creator > ul > li:first-of-type > button:after {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.list-creator > ul > li:first-of-type > button {
-  display: none;
-  pointer-events: none;
-  user-select: none;
+  .button-row.responsive {
+    flex-direction: column;
+  }
+  
+  .button-column.responsive {
+    flex-direction: row;
+  }
 }
