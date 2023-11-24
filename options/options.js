@@ -33,6 +33,16 @@ export function getInputElements() {
   }
 }
 
+export function startLoading() {
+  document.documentElement.classList.add(`busy`);
+  document.documentElement.setAttribute(`aria-hidden`, `true`);
+}
+
+export function stopLoading() {
+  document.documentElement.classList.remove(`busy`);
+  document.documentElement.removeAttribute(`aria-hidden`);
+}
+
 const optElems = getInputElements();
 
 // common functions

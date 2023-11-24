@@ -77,6 +77,50 @@ input[type="text"]:where(:hover, :focus-visible) {
   color: var(--light-hover);
 }
 
+/* Loading Indicator */
+
+.busy > body {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+@keyframes busySpin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.busy:before {
+  --ring-width: 0.5rem;
+  content: '';
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 8rem;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  background-image: conic-gradient(transparent, var(--dark-color));
+  border-radius: 100%;
+  mask-image: radial-gradient(
+    closest-side circle, 
+    #000 calc(99% - var(--ring-width)), 
+    #FFF calc(100% - var(--ring-width))
+  );
+  mask-mode: luminance;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  z-index: 99999;
+  animation-name: busySpin;
+  animation-duration: 500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
 /* Logo */
 
 #logo-light {
