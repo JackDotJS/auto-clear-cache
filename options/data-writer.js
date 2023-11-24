@@ -48,16 +48,27 @@ export const state = {
   options: JSON.parse(JSON.stringify(defaultOptions))
 };
 
+// common functions
+
+function loadOptionsIntoUI(options) {
+  /**
+   * TODO
+   * 
+   * will be used for the following:
+   * - loading current options on page load
+   * - loading current options on discarding changes
+   * - loading options from imported file 
+   * - loading options from sync storage once enabled
+   */
+}
+
 // unsaved changes warning
 
 window.addEventListener(`beforeunload`, (e) => {
   if (!state.saved) e.preventDefault();
 });
 
-// save and discard buttons
-
-const saveButton = document.getElementById(`save-button`);
-const discardButton = document.getElementById(`discard-button`);
+// save/discard changes logic
 
 function markSaved() {
   const buttons = [optElems.save, optElems.discard];
@@ -67,12 +78,23 @@ function markSaved() {
   }
 }
 
-saveButton.addEventListener(`click`, (e) => {
+optElems.save.addEventListener(`click`, (e) => {
+  // TODO
   const currentElems = getInputElements();
 
   console.debug(`writing options: `, currentElems);
 });
 
-discardButton.addEventListener(`click`, (e) => {
+optElems.discard.addEventListener(`click`, (e) => {
+  // TODO
+});
+
+// import/export logic
+
+optElems.import.addEventListener(`click`, (e) => {
+  // TODO
+});
+
+optElems.export.addEventListener(`click`, (e) => {
   // TODO
 });
