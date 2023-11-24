@@ -27,7 +27,7 @@
   </header>
   <main>
     <section>
-      <h2>Data Removal</h2>
+      <h2>Behavior</h2>
       <div id="interval">
         Clear browser data every
         <input type="number" id="interval-units" min="1" max="999" value="1" autocomplete="off"/>
@@ -165,21 +165,18 @@
     </section>
 
     <section>
-      <h2>Cloud Sync</h2>
-      <div class="grouped">
-        <label class="toggle">
-          <span role="presentation">Use Cloud Sync</span>
-          <input id="sync-toggle" type="checkbox" autocomplete="off"/>
-          <label for="sync-toggle" aria-hidden="true"></label>
-        </label>
-      </div>
-    </section>
-
-    <section>
-      <h2>Import/Export</h2>
+      <h2>Backup/Restore</h2>
+      <label class="toggle">
+        <span role="presentation">Use Cloud Sync</span>
+        <input id="sync-toggle" type="checkbox" autocomplete="off"/>
+        <label for="sync-toggle" aria-hidden="true"></label>
+      </label>
       <div class="button-row">
         <button id="import-button" autocomplete="off">Import From File</button>
         <button id="export-button" autocomplete="off">Export To File</button>
+      </div>
+      <div class="button-row">
+        <button id="load-defaults" autocomplete="off">Reset to Default Options</button>
       </div>
     </section>
   </main>
