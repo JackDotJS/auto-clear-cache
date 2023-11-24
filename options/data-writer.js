@@ -36,8 +36,7 @@ const defaultOptions = {
       units: 1,
       unit_type: "days"
     }
-  ],
-  sync_settings: false
+  ]
 }
 
 export const state = {
@@ -65,7 +64,7 @@ function markSaved() {
 }
 
 saveButton.addEventListener(`click`, (e) => {
-  // TODO
+  console.debug(`writing options: `, state.options);
 });
 
 discardButton.addEventListener(`click`, (e) => {
