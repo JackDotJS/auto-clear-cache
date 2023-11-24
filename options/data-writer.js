@@ -1,51 +1,11 @@
-import { getInputElements } from './options.js';
-
-const defaultOptions = {
-  _version: 1,
-  interval: {
-    units: 1,
-    unit_type: "week",
-    timesync: 0
-  },
-  datatypes: {
-    cache: false,
-    cookies: false,
-    downloads: false,
-    formdata: false,
-    history: false,
-    localstorage: false,
-    passwords: false
-  },
-  range: {
-    use_range: false,
-    units: 1,
-    unit_type: "days"
-  },
-  hostnames: {
-    enabled: false,
-    list: [
-      "https://example.com"
-    ]
-  },
-  never_ask_confirm: false,
-  notifications: {
-    success: true,
-    failure: true,
-    reminder: true
-  },
-  reminders: [
-    {
-      units: 1,
-      unit_type: "days"
-    }
-  ]
-}
+import { getInputElements, startLoading, stopLoading } from './options.js';
+import { defaultOptionsSync, defaultOptionsLocal } from '../defaultOptions.js'
 
 const optElems = getInputElements();
 
 export const state = {
   saved: true,
-  options: JSON.parse(JSON.stringify(defaultOptions))
+  storageRepo: browser.storage.local
 };
 
 // common functions
@@ -61,6 +21,16 @@ function loadOptionsIntoUI(options) {
    * - loading options from sync storage once enabled
    */
 }
+
+browser.storage.local.get(`syncEnabled`).then((results) => {
+  if (results.syncEnabled) state.storageRepo = browser.storage.sync;
+
+  state.storageRepo.get().then((opts) => {
+    console.debug(results);
+    loadOptionsIntoUI(opts);
+    stopLoading();
+  });
+});
 
 // unsaved changes warning
 
