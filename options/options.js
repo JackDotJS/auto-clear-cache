@@ -1,5 +1,40 @@
 import { state } from './data-writer.js';
 
+export function getInputElements() {
+  return {
+    save: document.getElementById(`save-button`),
+    discard: document.getElementById(`discard-button`),
+    dataRemoval: {
+      interval: {
+        units: document.getElementById(`interval-units`),
+        type: document.getElementById(`interval-type`),
+        timeSync: document.getElementById(`timesync`)
+      },
+      dataTypes: document.querySelectorAll(`#datatype-select input`),
+      onlyRecent: document.getElementById(`clearrecent`),
+      clearRange: {
+        units: document.getElementById(`clear-range-units`),
+        type: document.getElementById(`clear-range-type`)
+      },
+      useHostnames: document.getElementById(`usehostnames`),
+      hostnamesList: document.querySelectorAll(`#hostnames-list ul > li`),
+      neverConfirm: document.getElementById(`no-confirm`)
+    },
+    notifications: {
+      enabled: document.getElementById(`notif-enabled`),
+      success: document.getElementById(`notif-success`),
+      error: document.getElementById(`notif-error`),
+      remindersEnabled: document.getElementById(`notif-reminder`),
+      remindersList: document.querySelectorAll(`#reminders-list ul > li`)
+    },
+    syncEnabled: document.getElementById(`sync-toggle`),
+    import: document.getElementById(`import-button`),
+    export: document.getElementById(`export-button`)
+  }
+}
+
+const optElems = getInputElements();
+
 // common functions
 
 function setupTimeUnitInput(unitElem, typeElem) {
@@ -138,11 +173,8 @@ versionElem.innerHTML = `Version ${manifest.version}`;
 
 // save and discard buttons
 
-const saveButton = document.getElementById(`save-button`);
-const discardButton = document.getElementById(`discard-button`);
-
 function markChanged() {
-  const buttons = [saveButton, discardButton];
+  const buttons = [optElems.save, optElems.discard];
 
   state.saved = false;
 
@@ -153,15 +185,14 @@ function markChanged() {
 
 // data clearing interval
 
-const intervalUnitsElem = document.getElementById(`interval-units`);
-const intervalTypeElem = document.getElementById(`interval-type`);
-setupTimeUnitInput(intervalUnitsElem, intervalTypeElem);
+setupTimeUnitInput(
+  optElems.dataRemoval.interval.units,
+  optElems.dataRemoval.interval.type
+);
 
 // browser data types
 
-const clearDataTypes = document.querySelectorAll(`#datatype-select input`);
-
-for (const input of clearDataTypes) {
+for (const input of optElems.dataRemoval.dataTypes) {
   input.addEventListener(`change`, (e) => {
     console.debug(e.target.id, e.target.checked);
     markChanged();
@@ -170,19 +201,19 @@ for (const input of clearDataTypes) {
 
 // clear recent data
 
-const clearRecentElem = document.getElementById(`clearrecent`);
 const clearRecentToggleable = document.getElementById(`data-clear-range`);
-setupToggleable(clearRecentToggleable, clearRecentElem);
+setupToggleable(clearRecentToggleable, optElems.dataRemoval.onlyRecent);
 
-const clearRangeUnitsElem = document.getElementById(`clear-range-units`);
-const clearRangeTypeElem = document.getElementById(`clear-range-type`);
-setupTimeUnitInput(clearRangeUnitsElem, clearRangeTypeElem);
+setupTimeUnitInput(
+  optElems.dataRemoval.clearRange.units,
+  optElems.dataRemoval.clearRange.type
+);
 
 // only specific hostnames
 
-const usehostnamesElem = document.getElementById(`usehostnames`);
+
 const hostnamesListCreator = document.getElementById(`hostnames-list`);
-setupToggleable(hostnamesListCreator, usehostnamesElem);
+setupToggleable(hostnamesListCreator, optElems.dataRemoval.useHostnames);
 
 const templateHostname = document.querySelector(`#hostnames-list li input`);
 templateHostname.addEventListener(`change`, (e) => {
@@ -199,23 +230,31 @@ setupListCreator(newHostnameButton, hostnameList, (newHostname) => {
 
 // dont ask for confirmation
 
-const noConfirmElem = document.getElementById(`no-confirm`);
-noConfirmElem.addEventListener(`change`, (e) => {
+optElems.dataRemoval.neverConfirm.addEventListener(`change`, (e) => {
   markChanged();
 });
 
 // enable notifications
 
-const notifsElem = document.getElementById(`notif-enabled`);
-const notifSuccessElem = document.getElementById(`notif-success`);
-const notifErrorElem = document.getElementById(`notif-error`);
-const notifReminderElem = document.getElementById(`notif-reminder`);
-setupToggleable(notifSuccessElem.parentElement, notifsElem);
-setupToggleable(notifErrorElem.parentElement, notifsElem);
-setupToggleable(notifReminderElem.parentElement, notifsElem);
+setupToggleable(
+  optElems.notifications.success.parentElement,
+  optElems.notifications.enabled
+);
+setupToggleable(
+  optElems.notifications.error.parentElement,
+  optElems.notifications.enabled
+);
+setupToggleable(
+  optElems.notifications.remindersEnabled.parentElement,
+  optElems.notifications.enabled
+);
 
 const notifReminderListCreator = document.getElementById(`reminders-list`);
-setupToggleable(notifReminderListCreator, notifsElem, notifReminderElem);
+setupToggleable(
+  notifReminderListCreator,
+  optElems.notifications.enabled,
+  optElems.notifications.remindersEnabled
+);
 
 const templateReminderUnitElem = document.querySelector(`#reminders-list li input`);
 const templateReminderTypeElem = document.querySelector(`#reminders-list li select`);
@@ -231,7 +270,9 @@ setupListCreator(newReminderButton, notifRemindersList, (newReminder) => {
 
 // enable sync
 
-// TODO: requires data-writer.js
+optElems.syncEnabled.addEventListener(`change`, (e) => {
+  markChanged();
+});
 
 // import/export
 

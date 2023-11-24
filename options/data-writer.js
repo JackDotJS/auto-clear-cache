@@ -1,3 +1,5 @@
+import { getInputElements } from './options.js';
+
 const defaultOptions = {
   _version: 1,
   interval: {
@@ -39,6 +41,8 @@ const defaultOptions = {
   ]
 }
 
+const optElems = getInputElements();
+
 export const state = {
   saved: true,
   options: JSON.parse(JSON.stringify(defaultOptions))
@@ -56,7 +60,7 @@ const saveButton = document.getElementById(`save-button`);
 const discardButton = document.getElementById(`discard-button`);
 
 function markSaved() {
-  const buttons = [saveButton, discardButton];
+  const buttons = [optElems.save, optElems.discard];
 
   for (const button of buttons) {
     button.setAttribute(`disabled`, "");
@@ -64,7 +68,9 @@ function markSaved() {
 }
 
 saveButton.addEventListener(`click`, (e) => {
-  console.debug(`writing options: `, state.options);
+  const currentElems = getInputElements();
+
+  console.debug(`writing options: `, currentElems);
 });
 
 discardButton.addEventListener(`click`, (e) => {
