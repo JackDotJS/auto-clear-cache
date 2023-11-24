@@ -30,7 +30,7 @@
       <h2>Data Removal</h2>
       <div id="interval">
         Clear browser data every
-        <input type="number" id="interval-units" min="1" max="999" value="1"/>
+        <input type="number" id="interval-units" min="1" max="999" value="1" autocomplete="off"/>
         <select id="interval-type" class="time-type">
           <option value="day">day</option>
           <option value="week">week</option>
@@ -38,43 +38,43 @@
           <option value="year">year</option>
         </select>
         starting on
-        <input id="timesync" type="date" />
+        <input id="timesync" type="date" autocomplete="off"/>
       </div>
       <div id="datatype-select" class="grouped">
         <span>Data types to remove:</span>
         <div class="checkbox-grid">
           <label>
-            <input id="datatype-cache" type="checkbox"/>
+            <input id="datatype-cache" type="checkbox" autocomplete="off"/>
             <label for="datatype-cache"></label>
             Cache
           </label>
           <label>
-            <input id="datatype-cookies" type="checkbox"/>
+            <input id="datatype-cookies" type="checkbox" autocomplete="off"/>
             <label for="datatype-cookies"></label>
             Cookies
           </label>
           <label>
-            <input id="datatype-downloads" type="checkbox"/>
+            <input id="datatype-downloads" type="checkbox" autocomplete="off"/>
             <label for="datatype-downloads"></label>
             Downloads
           </label>
           <label>
-            <input id="datatype-formdata" type="checkbox"/>
+            <input id="datatype-formdata" type="checkbox" autocomplete="off"/>
             <label for="datatype-formdata"></label>
             Form Data
           </label>
           <label>
-            <input id="datatype-history" type="checkbox"/>
+            <input id="datatype-history" type="checkbox" autocomplete="off"/>
             <label for="datatype-history"></label>
             History
           </label>
           <label>
-            <input id="datatype-localstorage" type="checkbox"/>
+            <input id="datatype-localstorage" type="checkbox" autocomplete="off"/>
             <label for="datatype-localstorage"></label>
             Local Storage
           </label>
           <label>
-            <input id="datatype-passwords" type="checkbox"/>
+            <input id="datatype-passwords" type="checkbox" autocomplete="off"/>
             <label for="datatype-passwords"></label>
             Passwords
           </label>
@@ -83,12 +83,12 @@
       <div class="grouped">
         <label class="toggle">
           <span role="presentation">Only clear recent data</span>
-          <input id="clearrecent" type="checkbox"/>
+          <input id="clearrecent" type="checkbox" autocomplete="off"/>
           <label for="clearrecent" aria-hidden="true"></label>
         </label>
         <div id="data-clear-range" class="disabled">
           Clear data added within the previous
-          <input type="number" id="clear-range-units" min="1" max="999" value="1"/>
+          <input type="number" id="clear-range-units" min="1" max="999" value="1" autocomplete="off"/>
           <select id="clear-range-type" class="time-type">
             <option value="day">day</option>
             <option value="week">week</option>
@@ -100,14 +100,14 @@
       <div class="grouped">
         <label class="toggle">
           <span role="presentation">Only clear data from specific websites</span>
-          <input id="usehostnames" type="checkbox"/>
+          <input id="usehostnames" type="checkbox" autocomplete="off"/>
           <label for="usehostnames" aria-hidden="true"></label>
         </label>
         <div id="hostnames-list" class="list-creator disabled">
           <span>Note: Hostnames must be exact. No wildcards (*).</span>
           <ul>
             <li>
-              <input type="text" placeholder="https://"/>
+              <input type="text" placeholder="https://"/ autocomplete="off">
               <button></button>
             </li>
           </ul>
@@ -116,7 +116,7 @@
       </div>
       <label class="toggle">
         <span role="presentation">Never ask for confirmation before clearing <b>(NOT RECOMMENDED)</b></span>
-        <input id="no-confirm" type="checkbox"/>
+        <input id="no-confirm" type="checkbox" autocomplete="off"/>
         <label for="no-confirm" aria-hidden="true"></label>
       </label>
     </section>
@@ -125,30 +125,30 @@
       <h2>Notifications</h2>
       <label class="toggle">
         <span role="presentation">Enable Notifications</span>
-        <input id="notif-enabled" type="checkbox"/>
+        <input id="notif-enabled" type="checkbox" autocomplete="off"/>
         <label for="notif-enabled" aria-hidden="true"></label>
       </label>
       <label class="toggle disabled">
         <span role="presentation">Data successfully cleared</span>
-        <input id="notif-success" type="checkbox"/>
+        <input id="notif-success" type="checkbox" autocomplete="off"/>
         <label for="notif-success" aria-hidden="true"></label>
       </label>
       <label class="toggle disabled">
         <span role="presentation">An error occurred, preventing data removal</span>
-        <input id="notif-error" type="checkbox"/>
+        <input id="notif-error" type="checkbox" autocomplete="off"/>
         <label for="notif-error" aria-hidden="true"></label>
       </label>
       <div class="grouped">
         <label class="toggle disabled">
           <span role="presentation">Upcoming data removal reminders</span>
-          <input id="notif-reminder" type="checkbox"/>
+          <input id="notif-reminder" type="checkbox" autocomplete="off"/>
           <label for="notif-reminder" aria-hidden="true"></label>
         </label>
         <div id="reminders-list" class="list-creator disabled">
           <ul>
             <li>
               Remind me
-              <input type="number" min="1" max="999" value="1"/>
+              <input type="number" min="1" max="999" value="1" autocomplete="off"/>
               <select class="time-type">
                 <option value="day">day</option>
                 <option value="week">week</option>
@@ -169,7 +169,7 @@
       <div class="grouped">
         <label class="toggle">
           <span role="presentation">Use Cloud Sync</span>
-          <input id="sync-toggle" type="checkbox"/>
+          <input id="sync-toggle" type="checkbox" autocomplete="off"/>
           <label for="sync-toggle" aria-hidden="true"></label>
         </label>
       </div>
