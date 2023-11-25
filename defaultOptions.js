@@ -17,22 +17,20 @@ export const defaultOptionsSync = {
   onlyRecent: false,
   clearRange: {
     units: 1,
-    unitType: "days"
+    unitType: "day"
   },
   useHostnames: false,
-  hostnamesList: [
-    "https://example.com"
-  ],
+  hostnamesList: [ "" ],
   neverConfirm: false,
   notifications: {
     enabled: false,
     success: false,
-    failure: false,
+    error: false,
     remindersEnabled: false,
     reminders: [
       {
         units: 1,
-        unit_type: "days"
+        unitType: "day"
       }
     ]
   }

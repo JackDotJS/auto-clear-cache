@@ -53,6 +53,38 @@ const dataLinks = [
     front: `onlyRecent.checked`,
     back: `onlyRecent`,
   },
+  {
+    front: `clearRange.units.value`,
+    back: `clearRange.units`,
+  },
+  {
+    front: `clearRange.unitType.value`,
+    back: `clearRange.unitType`,
+  },
+  {
+    front: `useHostnames.checked`,
+    back: `useHostnames`,
+  },
+  {
+    front: `notifications.enabled.checked`,
+    back: `notifications.enabled`,
+  },
+  {
+    front: `notifications.success.checked`,
+    back: `notifications.success`,
+  },
+  {
+    front: `notifications.error.checked`,
+    back: `notifications.error`,
+  },
+  {
+    front: `notifications.remindersEnabled.checked`,
+    back: `notifications.remindersEnabled`,
+  },
+  {
+    front: `syncEnabled.checked`,
+    back: `syncEnabled`,
+  }
 ]
 
 // common functions
@@ -69,10 +101,11 @@ const dataLinks = [
  * - loading default options if requested by the user
  */
 function loadOptionsIntoUI(options) {
-
   console.debug(`loading options into UI: `, options);
 
   const currentElems = getInputElements();
+
+  const triggerChange = new CustomEvent(`change`, { detail: true });
 
   for (const link of dataLinks) {
     const frontAccessor = link.front.split(`.`);
@@ -84,10 +117,65 @@ function loadOptionsIntoUI(options) {
     const backElement = backAccessor.reduce((o, i) => o[i], options);
 
     frontendElement[frontTarget] = backElement[backTarget];
-
-    const evt = new CustomEvent(`change`, { detail: true });
-    frontendElement.dispatchEvent(evt);
+    
+    frontendElement.dispatchEvent(triggerChange);
   }
+
+  const listCreators = document.querySelectorAll(`.list-creator`);
+
+  for (const listCreator of listCreators) {
+    const list = listCreator.querySelector(`ul`);
+    const template = listCreator.querySelector(`ul > li:first-child`);
+    const extras = listCreator.querySelectorAll(`ul > li:not(:first-child)`);
+
+    for (const item of extras) {
+      item.remove();
+    }
+
+    if (listCreator.id === `hostnames-list`) {
+      for (let i = 0; i < options.hostnamesList.length; i++) {
+        const hostname = options.hostnamesList[i];
+
+        let target;
+        if (i > 0) {
+          const newNode = template.cloneNode(true);
+          target = newNode.querySelector(`input[type="text"]`);
+          list.appendChild(newNode);
+        } else {
+          target = template.querySelector(`input[type="text"]`);
+        }
+        
+        target.value = hostname;
+        target.dispatchEvent(triggerChange);
+      }
+    }
+
+    if (listCreator.id === `reminders-list`) {
+      for (let i = 0; i < options.notifications.reminders.length; i++) {
+        const reminder = options.notifications.reminders[i];
+
+        let targetUnits;
+        let targetUnitType;
+        if (i > 0) {
+          const newNode = template.cloneNode(true);
+          targetUnits = newNode.querySelector(`input[type="number"]`);
+          targetUnitType = newNode.querySelector(`select.time-type`);
+          list.appendChild(newNode);
+        } else {
+          targetUnits = template.querySelector(`input[type="number"]`);
+          targetUnitType = template.querySelector(`select.time-type`);
+        }
+        
+        targetUnits.value = reminder.units;
+        targetUnitType.value = reminder.unitType;
+
+        targetUnits.dispatchEvent(triggerChange);
+        targetUnitType.dispatchEvent(triggerChange);
+      }
+    }
+  }
+
+  
 }
 
 browser.storage.local.get(`syncEnabled`).then((results) => {
