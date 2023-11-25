@@ -174,8 +174,6 @@ function loadOptionsIntoUI(options) {
       }
     }
   }
-
-  
 }
 
 browser.storage.local.get(`syncEnabled`).then((results) => {
@@ -210,11 +208,57 @@ function markSaved() {
   }
 }
 
-optElems.save.addEventListener(`click`, (e) => {
-  // TODO
-  const currentElems = getInputElements();
+optElems.save.addEventListener(`click`, async (e) => {
+  startLoading();
 
-  console.debug(`writing options: `, currentElems);
+  const currentElems = getInputElements();
+  const options = {};
+
+  for (const link of dataLinks) {
+    const frontAccessor = link.front.split(`.`);
+    const frontTarget = frontAccessor.pop();
+    const frontendElement = frontAccessor.reduce((obj, key) => obj[key], currentElems);
+
+    const backAccessor = link.back.split(`.`);
+    const backTarget = backAccessor.pop();
+    const backElement = backAccessor.reduce((obj, key) => obj[key] = obj[key] || {}, options);
+
+    backElement[backTarget] = frontendElement[frontTarget];
+  }
+
+  const listCreators = document.querySelectorAll(`.list-creator`);
+
+  for (const listCreator of listCreators) {
+    const items = listCreator.querySelectorAll(`ul > li`);
+
+    if (listCreator.id === `hostnames-list`) {
+      options.hostnamesList = [];
+
+      for (const item of items) {
+        const hostname = item.querySelector(`input[type="text"]`).value;
+        options.hostnamesList.push(hostname);
+      }
+    }
+
+    if (listCreator.id === `reminders-list`) {
+      options.notifications.reminders = [];
+
+      for (const item of items) {
+        const units = item.querySelector(`input[type="number"]`).value;
+        const unitType = item.querySelector(`select.time-type`).value;
+        options.notifications.reminders.push({ units, unitType });
+      }
+    }
+  }
+
+  console.debug(`writing options data: `, options);
+
+  state.storageRepo.set(options).then(() => {
+    markSaved();
+    stopLoading();
+  });
+
+  
 });
 
 optElems.discard.addEventListener(`click`, (e) => {
