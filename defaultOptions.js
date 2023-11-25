@@ -2,10 +2,10 @@ export const defaultOptionsSync = {
   _version: 1,
   interval: {
     units: 1,
-    unit_type: "week",
-    timesync: 0
+    unitType: "week",
+    timeSync: 0
   },
-  datatypes: {
+  dataTypes: {
     cache: false,
     cookies: false,
     downloads: false,
@@ -14,29 +14,28 @@ export const defaultOptionsSync = {
     localstorage: false,
     passwords: false
   },
-  range: {
-    use_range: false,
+  onlyRecent: false,
+  clearRange: {
     units: 1,
-    unit_type: "days"
+    unitType: "days"
   },
-  hostnames: {
-    enabled: false,
-    list: [
-      "https://example.com"
-    ]
-  },
-  never_ask_confirm: false,
+  useHostnames: false,
+  hostnamesList: [
+    "https://example.com"
+  ],
+  neverConfirm: false,
   notifications: {
-    success: true,
-    failure: true,
-    reminder: true
-  },
-  reminders: [
-    {
-      units: 1,
-      unit_type: "days"
-    }
-  ]
+    enabled: false,
+    success: false,
+    failure: false,
+    remindersEnabled: false,
+    reminders: [
+      {
+        units: 1,
+        unit_type: "days"
+      }
+    ]
+  }
 }
 
 export const defaultOptionsLocal = {

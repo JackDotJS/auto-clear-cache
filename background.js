@@ -5,27 +5,21 @@ import { defaultOptionsSync, defaultOptionsLocal } from './defaultOptions.js'
 browser.storage.local.get().then((results) => {
   console.debug(results);
 
-  const checkSettingsExist = (storageRepo) => {
-    storageRepo.get(`_version`).then((v) => {
-      if (Object.keys(results).length === 0) {
-        storageRepo.set(defaultOptionsSync)
-      }
-    });
+  const combinedDefaults = {...defaultOptionsSync, ...defaultOptionsLocal}
+  const currentKeys = Object.keys(results);
+  const defaultKeys = Object.keys(combinedDefaults);
+
+  const missingKeys = defaultKeys.filter((key) => !currentKeys.includes(key));
+  if (missingKeys.length === 0) return;
+
+  console.warn(`missing keys from storage: `, missingKeys);
+
+  const missingData = {};
+  for (const key of missingKeys) {
+    missingData[key] = combinedDefaults[key];
   }
 
-  if (Object.keys(results).length === 0) {
-    browser.storage.local.set(defaultOptionsLocal);
-
-    if (defaultOptionsLocal.syncEnabled) {
-      checkSettingsExist(browser.storage.sync);
-    } else {
-      checkSettingsExist(browser.storage.local);
-    }
-  } else if (results.syncEnabled) {
-    checkSettingsExist(browser.storage.sync);
-  } else {
-    checkSettingsExist(browser.storage.local);
-  }
+  browser.storage.local.set(missingData)
 });
 
 const canNotify = await browser.permissions.contains({ permissions: [ `notifications` ] });

@@ -4,22 +4,28 @@ export function getInputElements() {
   return {
     save: document.getElementById(`save-button`),
     discard: document.getElementById(`discard-button`),
-    dataRemoval: {
-      interval: {
-        units: document.getElementById(`interval-units`),
-        type: document.getElementById(`interval-type`),
-        timeSync: document.getElementById(`timesync`)
-      },
-      dataTypes: document.querySelectorAll(`#datatype-select input`),
-      onlyRecent: document.getElementById(`clearrecent`),
-      clearRange: {
-        units: document.getElementById(`clear-range-units`),
-        type: document.getElementById(`clear-range-type`)
-      },
-      useHostnames: document.getElementById(`usehostnames`),
-      hostnamesList: document.querySelectorAll(`#hostnames-list ul > li`),
-      neverConfirm: document.getElementById(`no-confirm`)
+    interval: {
+      units: document.getElementById(`interval-units`),
+      unitType: document.getElementById(`interval-type`),
+      timeSync: document.getElementById(`timesync`)
     },
+    dataTypes: {
+      cache: document.getElementById(`datatype-cache`),
+      cookies: document.getElementById(`datatype-cookies`),
+      downloads: document.getElementById(`datatype-downloads`),
+      formdata: document.getElementById(`datatype-formdata`),
+      history: document.getElementById(`datatype-history`),
+      localstorage: document.getElementById(`datatype-localstorage`),
+      passwords: document.getElementById(`datatype-passwords`),
+    },
+    onlyRecent: document.getElementById(`clearrecent`),
+    clearRange: {
+      units: document.getElementById(`clear-range-units`),
+      unitType: document.getElementById(`clear-range-type`)
+    },
+    useHostnames: document.getElementById(`usehostnames`),
+    hostnamesList: document.querySelectorAll(`#hostnames-list ul > li`),
+    neverConfirm: document.getElementById(`no-confirm`),
     notifications: {
       enabled: document.getElementById(`notif-enabled`),
       success: document.getElementById(`notif-success`),
@@ -29,7 +35,8 @@ export function getInputElements() {
     },
     syncEnabled: document.getElementById(`sync-toggle`),
     import: document.getElementById(`import-button`),
-    export: document.getElementById(`export-button`)
+    export: document.getElementById(`export-button`),
+    loadDefaults: document.getElementById(`load-defaults`)
   }
 }
 
@@ -48,38 +55,9 @@ const optElems = getInputElements();
 // common functions
 
 function setupTimeUnitInput(unitElem, typeElem) {
-  unitElem.addEventListener(`change`, (e) => {
-    const min = parseInt(e.target.getAttribute(`min`));
-    const max = parseInt(e.target.getAttribute(`max`));
-    const val = parseInt(e.target.value);
-  
-    // value is empty
-    if (isNaN(val)) {
-      if (!isNaN(min)) {
-        e.target.value = min;
-      } else {
-        e.target.value = 0;
-      }
-    }
-  
-    // value is under minimum
-    if (!isNaN(min) && val < min) {
-      e.target.value = min;
-    }
-  
-    // value is over maximum
-    if (!isNaN(max) && val > max) {
-      e.target.value = e.target.value.substring(0, 3);
-    }
-
-    markChanged();
-  
-    //console.debug(min, max, val);
-  });
-
-  unitElem.addEventListener(`input`, (e) => {
+  const checkPlural = () => {
     const typeOpts = typeElem.querySelectorAll(`option`);
-    let val = parseInt(e.target.value);
+    let val = parseInt(unitElem.value);
 
     //console.debug(val, typeOpts);
     if (isNaN(val)) val = 1;
@@ -122,17 +100,50 @@ function setupTimeUnitInput(unitElem, typeElem) {
         }
       }
     }
+  }
+
+  unitElem.addEventListener(`change`, (e) => {
+    const min = parseInt(e.target.getAttribute(`min`));
+    const max = parseInt(e.target.getAttribute(`max`));
+    const val = parseInt(e.target.value);
+  
+    // value is empty
+    if (isNaN(val)) {
+      if (!isNaN(min)) {
+        e.target.value = min;
+      } else {
+        e.target.value = 0;
+      }
+    }
+  
+    // value is under minimum
+    if (!isNaN(min) && val < min) {
+      e.target.value = min;
+    }
+  
+    // value is over maximum
+    if (!isNaN(max) && val > max) {
+      e.target.value = e.target.value.substring(0, 3);
+    }
+
+    if (!e.detail) markChanged();
+
+    checkPlural();
+  
+    //console.debug(min, max, val);
   });
 
+  unitElem.addEventListener(`input`, checkPlural);
+
   typeElem.addEventListener(`change`, (e) => {
-    markChanged();
+    if (!e.detail) markChanged();
   });
 }
 
 function setupToggleable(toggleableElem, ...switchElems) {
   for (const switchElem of switchElems) {
     switchElem.addEventListener(`change`, (e) => {
-      markChanged();
+      if (!e.detail) markChanged();
     
       const descendants = toggleableElem.querySelectorAll(`*`);
       console.debug(descendants);
@@ -183,11 +194,10 @@ versionElem.innerHTML = `Version ${manifest.version}`;
 
 // save and discard buttons
 
-function markChanged() {
-  const buttons = [optElems.save, optElems.discard];
-
+export function markChanged() {
   state.saved = false;
 
+  const buttons = [optElems.save, optElems.discard];
   for (const button of buttons) {
     button.removeAttribute(`disabled`);
   }
@@ -196,14 +206,17 @@ function markChanged() {
 // data clearing interval
 
 setupTimeUnitInput(
-  optElems.dataRemoval.interval.units,
-  optElems.dataRemoval.interval.type
+  optElems.interval.units,
+  optElems.interval.unitType
 );
 
 // browser data types
 
-for (const input of optElems.dataRemoval.dataTypes) {
+for (const dataType of Object.keys(optElems.dataTypes)) {
+  const input = optElems.dataTypes[dataType];
+
   input.addEventListener(`change`, (e) => {
+    if (e.detail) return;
     console.debug(e.target.id, e.target.checked);
     markChanged();
   });
@@ -212,36 +225,36 @@ for (const input of optElems.dataRemoval.dataTypes) {
 // clear recent data
 
 const clearRecentToggleable = document.getElementById(`data-clear-range`);
-setupToggleable(clearRecentToggleable, optElems.dataRemoval.onlyRecent);
+setupToggleable(clearRecentToggleable, optElems.onlyRecent);
 
 setupTimeUnitInput(
-  optElems.dataRemoval.clearRange.units,
-  optElems.dataRemoval.clearRange.type
+  optElems.clearRange.units,
+  optElems.clearRange.unitType
 );
 
 // only specific hostnames
 
 
 const hostnamesListCreator = document.getElementById(`hostnames-list`);
-setupToggleable(hostnamesListCreator, optElems.dataRemoval.useHostnames);
+setupToggleable(hostnamesListCreator, optElems.useHostnames);
 
 const templateHostname = document.querySelector(`#hostnames-list li input`);
 templateHostname.addEventListener(`change`, (e) => {
-  markChanged();
+  if (!e.detail) markChanged();
 });
 
 const newHostnameButton = document.querySelector(`#hostnames-list > button`);
 const hostnameList = document.querySelector(`#hostnames-list > ul`);
 setupListCreator(newHostnameButton, hostnameList, (newHostname) => {
   newHostname.addEventListener(`change`, (e) => {
-    markChanged();
+    if (!e.detail) markChanged();
   });
 });
 
 // dont ask for confirmation
 
-optElems.dataRemoval.neverConfirm.addEventListener(`change`, (e) => {
-  markChanged();
+optElems.neverConfirm.addEventListener(`change`, (e) => {
+  if (!e.detail) markChanged();
 });
 
 // enable notifications
@@ -281,7 +294,7 @@ setupListCreator(newReminderButton, notifRemindersList, (newReminder) => {
 // enable sync
 
 optElems.syncEnabled.addEventListener(`change`, (e) => {
-  markChanged();
+  if (!e.detail) markChanged();
 });
 
 // import/export

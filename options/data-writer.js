@@ -1,4 +1,4 @@
-import { getInputElements, startLoading, stopLoading } from './options.js';
+import { getInputElements, startLoading, stopLoading, markChanged } from './options.js';
 import { defaultOptionsSync, defaultOptionsLocal } from '../defaultOptions.js'
 
 const optElems = getInputElements();
@@ -8,27 +8,99 @@ export const state = {
   storageRepo: browser.storage.local
 };
 
+const dataLinks = [
+  {
+    front: `interval.units.value`,
+    back: `interval.units`,
+  },
+  {
+    front: `interval.unitType.value`,
+    back: `interval.unitType`,
+  },
+  {
+    front: `interval.timeSync.valueAsNumber`,
+    back: `interval.timeSync`,
+  },
+  {
+    front: `dataTypes.cache.checked`,
+    back: `dataTypes.cache`,
+  },
+  {
+    front: `dataTypes.cookies.checked`,
+    back: `dataTypes.cookies`,
+  },
+  {
+    front: `dataTypes.downloads.checked`,
+    back: `dataTypes.downloads`,
+  },
+  {
+    front: `dataTypes.formdata.checked`,
+    back: `dataTypes.formdata`,
+  },
+  {
+    front: `dataTypes.history.checked`,
+    back: `dataTypes.history`,
+  },
+  {
+    front: `dataTypes.localstorage.checked`,
+    back: `dataTypes.localstorage`,
+  },
+  {
+    front: `dataTypes.passwords.checked`,
+    back: `dataTypes.passwords`,
+  },
+  {
+    front: `onlyRecent.checked`,
+    back: `onlyRecent`,
+  },
+]
+
 // common functions
 
+
+/**
+ * TODO
+ * 
+ * will be used for the following:
+ * - loading current options on page load
+ * - loading current options on discarding changes
+ * - loading options from imported file 
+ * - loading options from sync storage once enabled
+ * - loading default options if requested by the user
+ */
 function loadOptionsIntoUI(options) {
-  /**
-   * TODO
-   * 
-   * will be used for the following:
-   * - loading current options on page load
-   * - loading current options on discarding changes
-   * - loading options from imported file 
-   * - loading options from sync storage once enabled
-   */
+
+  console.debug(`loading options into UI: `, options);
+
+  const currentElems = getInputElements();
+
+  for (const link of dataLinks) {
+    const frontAccessor = link.front.split(`.`);
+    const frontTarget = frontAccessor.pop();
+    const frontendElement = frontAccessor.reduce((o, i) => o[i], currentElems);
+
+    const backAccessor = link.back.split(`.`);
+    const backTarget = backAccessor.pop();
+    const backElement = backAccessor.reduce((o, i) => o[i], options);
+
+    frontendElement[frontTarget] = backElement[backTarget];
+
+    const evt = new CustomEvent(`change`, { detail: true });
+    frontendElement.dispatchEvent(evt);
+  }
 }
 
 browser.storage.local.get(`syncEnabled`).then((results) => {
   if (results.syncEnabled) state.storageRepo = browser.storage.sync;
 
   state.storageRepo.get().then((opts) => {
-    console.debug(results);
+    console.debug(opts);
     loadOptionsIntoUI(opts);
-    stopLoading();
+
+    // small delay to let the UI animations to catch up
+    setTimeout(() => {
+      stopLoading();
+    }, 300);
   });
 });
 
@@ -41,8 +113,9 @@ window.addEventListener(`beforeunload`, (e) => {
 // save/discard changes logic
 
 function markSaved() {
-  const buttons = [optElems.save, optElems.discard];
+  state.saved = true;
 
+  const buttons = [optElems.save, optElems.discard];
   for (const button of buttons) {
     button.setAttribute(`disabled`, "");
   }
@@ -67,4 +140,11 @@ optElems.import.addEventListener(`click`, (e) => {
 
 optElems.export.addEventListener(`click`, (e) => {
   // TODO
+});
+
+// load defaults logic
+
+optElems.loadDefaults.addEventListener(`click`, (e) => {
+  loadOptionsIntoUI({...defaultOptionsSync, ...defaultOptionsLocal});
+  markChanged();
 });
