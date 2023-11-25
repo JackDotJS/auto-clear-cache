@@ -196,6 +196,7 @@ versionElem.innerHTML = `Version ${manifest.version}`;
 
 export function markChanged() {
   state.saved = false;
+  document.title = `*Options | Auto Clear Cache`;
 
   const buttons = [optElems.save, optElems.discard];
   for (const button of buttons) {

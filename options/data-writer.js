@@ -114,6 +114,7 @@ window.addEventListener(`beforeunload`, (e) => {
 
 function markSaved() {
   state.saved = true;
+  document.title = `Options | Auto Clear Cache`;
 
   const buttons = [optElems.save, optElems.discard];
   for (const button of buttons) {
