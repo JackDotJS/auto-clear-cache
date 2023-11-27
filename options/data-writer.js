@@ -89,17 +89,6 @@ const dataLinks = [
 
 // common functions
 
-
-/**
- * TODO
- * 
- * will be used for the following:
- * - loading current options on page load
- * - loading current options on discarding changes
- * - loading options from imported file 
- * - loading options from sync storage once enabled
- * - loading default options if requested by the user
- */
 function loadOptionsIntoUI(options) {
   console.debug(`loading options into UI: `, options);
 
@@ -107,7 +96,9 @@ function loadOptionsIntoUI(options) {
 
   const triggerChange = new CustomEvent(`change`, { detail: true });
 
+  // handles simple inputs like toggle switches, number inputs, etc 
   for (const link of dataLinks) {
+    // convert full string notation to actual object reference
     const frontAccessor = link.front.split(`.`);
     const frontTarget = frontAccessor.pop();
     const frontendElement = frontAccessor.reduce((o, i) => o[i], currentElems);
@@ -116,18 +107,20 @@ function loadOptionsIntoUI(options) {
     const backTarget = backAccessor.pop();
     const backElement = backAccessor.reduce((o, i) => o[i], options);
 
+    // apply value from options to UI element
     frontendElement[frontTarget] = backElement[backTarget];
-    
+    // trigger "change" event manually
     frontendElement.dispatchEvent(triggerChange);
   }
 
+  // special handler for list creators
   const listCreators = document.querySelectorAll(`.list-creator`);
-
   for (const listCreator of listCreators) {
     const list = listCreator.querySelector(`ul`);
     const template = listCreator.querySelector(`ul > li:first-child`);
     const extras = listCreator.querySelectorAll(`ul > li:not(:first-child)`);
 
+    // remove all except first item
     for (const item of extras) {
       item.remove();
     }
