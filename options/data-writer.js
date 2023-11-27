@@ -6,8 +6,11 @@ const optElems = getInputElements();
 export const state = {
   saved: true,
   storageRepo: browser.storage.local,
-  exportURL: null,
-  exportElem: null,
+  fs: {
+    importElem: null,
+    exportURL: null,
+    exportElem: null
+  }
 };
 
 // this is stupid as fuck but i can't think of any other way to do this right now
@@ -292,8 +295,7 @@ optElems.import.addEventListener(`click`, (e) => {
 });
 
 optElems.export.addEventListener(`click`, (e) => {
-  if (state.exportElem != null) state.exportElem.remove();
-  if (state.exportURL != null) URL.revokeObjectURL(state.exportURL);
+  if (state.fs.exportURL != null) URL.revokeObjectURL(state.fs.exportURL);
 
   const newOptions = getOptionsFromUI();
 
@@ -303,12 +305,13 @@ optElems.export.addEventListener(`click`, (e) => {
     { type: `application/json` }
   );
 
-  state.exportURL = URL.createObjectURL(file);
+  state.fs.exportURL = URL.createObjectURL(file);
 
-  const a = document.createElement(`a`);
-  a.href = state.exportURL;
+  const a = state.fs.exportElem ?? document.createElement(`a`);
+  a.href = state.fs.exportURL;
   a.download = file.name;
   a.style.position = `fixed`;
+  state.fs.exportElem = a;
 
   document.body.appendChild(a);
   a.click();
