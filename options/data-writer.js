@@ -10,6 +10,7 @@ export const state = {
   exportElem: null,
 };
 
+// this is stupid as fuck but i can't think of any other way to do this right now
 const dataLinks = [
   {
     front: `interval.units.value`,
@@ -66,6 +67,10 @@ const dataLinks = [
   {
     front: `useHostnames.checked`,
     back: `useHostnames`,
+  },
+  {
+    front: `neverConfirm.checked`,
+    back: `neverConfirm`
   },
   {
     front: `notifications.enabled.checked`,
