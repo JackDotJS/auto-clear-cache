@@ -365,14 +365,14 @@ input[type="number"] {
 
 .list-creator > ul > li > button {
   width: auto;
-  height: calc(100% - 1rem);
+  height: 100%;
   aspect-ratio: 1 / 1;
   position: relative;
   margin-left: auto;
 }
 
-.list-creator > ul > li:first-of-type > button:before,
-.list-creator > ul > li:first-of-type > button:after {
+.list-creator ul > li > button:before,
+.list-creator ul > li > button:after {
   content: "";
   display: block;
   position: absolute;
@@ -381,15 +381,15 @@ input[type="number"] {
   height: 3px;
 }
 
-.list-creator > ul > li:first-of-type > button:before {
+.list-creator ul > li > button:before {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-.list-creator > ul > li:first-of-type > button:after {
+.list-creator ul > li > button:after {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.list-creator > ul > li:first-of-type > button {
+.list-creator ul > li:first-of-type > button {
   display: none;
   pointer-events: none;
   user-select: none;
