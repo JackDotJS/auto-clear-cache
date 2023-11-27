@@ -183,6 +183,11 @@ function setupListCreator(addItemButton, listElem, newItemFunc) {
       markChanged();
       if (newItemFunc != null) {
         for (const newNode of mutation.addedNodes) {
+          const deleteButton = newNode.querySelector(`button`);
+          deleteButton.addEventListener(`click`, () => {
+            newNode.remove();
+          });
+
           newItemFunc(newNode);
         }
       }
