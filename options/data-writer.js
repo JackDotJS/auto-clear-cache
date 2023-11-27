@@ -255,7 +255,22 @@ optElems.save.addEventListener(`click`, async (e) => {
 });
 
 optElems.discard.addEventListener(`click`, (e) => {
-  // TODO
+  // i know this technically isn't good UX design, but it's good enough for now.
+  // might look into creating an undo/redo system some day
+  const confirmed = window.confirm(`Are you sure you want to discard your changes? This cannot be undone.`);
+
+  if (!confirmed) return;
+
+  startLoading();
+  state.storageRepo.get().then((opts) => {
+    loadOptionsIntoUI(opts);
+
+    // small delay to let the UI animations to catch up
+    setTimeout(() => {
+      markSaved();
+      stopLoading();
+    }, 300);
+  });
 });
 
 // import/export logic
