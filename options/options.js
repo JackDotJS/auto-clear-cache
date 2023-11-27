@@ -138,6 +138,9 @@ function setupTimeUnitInput(unitElem, typeElem) {
   typeElem.addEventListener(`change`, (e) => {
     if (!e.detail) markChanged();
   });
+
+  // in case the value is not 1 to begin with
+  checkPlural();
 }
 
 function setupToggleable(toggleableElem, ...switchElems) {
@@ -173,16 +176,25 @@ function setupToggleable(toggleableElem, ...switchElems) {
   }
 }
 
-function setupListCreator(addItemButton, listElem, customFunc) {
-  addItemButton.addEventListener(`click`, (e) => {
-    markChanged();
+function setupListCreator(addItemButton, listElem, newItemFunc) {
+  const observer = new MutationObserver((mutationList) => {
+    for (const mutation of mutationList) {
+      if (mutation.addedNodes.length === 0) continue;
+      markChanged();
+      if (newItemFunc != null) {
+        for (const newNode of mutation.addedNodes) {
+          newItemFunc(newNode);
+        }
+      }
+    }
+  });
 
+  observer.observe(listElem, { childList: true })
+
+  addItemButton.addEventListener(`click`, (e) => {
     const template = listElem.querySelector(`li:last-of-type`);
     const newItem = template.cloneNode(true);
-
     listElem.appendChild(newItem);
-
-    if (customFunc != null) customFunc(newItem);
   });
 }
 
