@@ -5,7 +5,9 @@ const optElems = getInputElements();
 
 export const state = {
   saved: true,
-  storageRepo: browser.storage.local
+  storageRepo: browser.storage.local,
+  exportURL: null,
+  exportElem: null,
 };
 
 const dataLinks = [
@@ -169,41 +171,7 @@ function loadOptionsIntoUI(options) {
   }
 }
 
-browser.storage.local.get(`syncEnabled`).then((results) => {
-  if (results.syncEnabled) state.storageRepo = browser.storage.sync;
-
-  state.storageRepo.get().then((opts) => {
-    console.debug(opts);
-    loadOptionsIntoUI(opts);
-
-    // small delay to let the UI animations to catch up
-    setTimeout(() => {
-      stopLoading();
-    }, 300);
-  });
-});
-
-// unsaved changes warning
-
-window.addEventListener(`beforeunload`, (e) => {
-  if (!state.saved) e.preventDefault();
-});
-
-// save/discard changes logic
-
-function markSaved() {
-  state.saved = true;
-  document.title = `Options | Auto Clear Cache`;
-
-  const buttons = [optElems.save, optElems.discard];
-  for (const button of buttons) {
-    button.setAttribute(`disabled`, "");
-  }
-}
-
-optElems.save.addEventListener(`click`, async (e) => {
-  startLoading();
-
+function getOptionsFromUI() {
   const currentElems = getInputElements();
   const options = {};
 
@@ -244,14 +212,53 @@ optElems.save.addEventListener(`click`, async (e) => {
     }
   }
 
-  console.debug(`writing options data: `, options);
+  return options;
+}
 
-  state.storageRepo.set(options).then(() => {
+// load current options on page load
+
+browser.storage.local.get(`syncEnabled`).then((results) => {
+  if (results.syncEnabled) state.storageRepo = browser.storage.sync;
+
+  state.storageRepo.get().then((opts) => {
+    console.debug(opts);
+    loadOptionsIntoUI(opts);
+
+    // small delay to let the UI animations to catch up
+    setTimeout(() => {
+      stopLoading();
+    }, 300);
+  });
+});
+
+// unsaved changes warning
+
+window.addEventListener(`beforeunload`, (e) => {
+  if (!state.saved) e.preventDefault();
+});
+
+// save/discard changes logic
+
+function markSaved() {
+  state.saved = true;
+  document.title = `Options | Auto Clear Cache`;
+
+  const buttons = [optElems.save, optElems.discard];
+  for (const button of buttons) {
+    button.setAttribute(`disabled`, "");
+  }
+}
+
+optElems.save.addEventListener(`click`, async (e) => {
+  startLoading();
+  const newOptions = getOptionsFromUI();
+
+  console.debug(`writing options data: `, newOptions);
+
+  state.storageRepo.set(newOptions).then(() => {
     markSaved();
     stopLoading();
   });
-
-  
 });
 
 optElems.discard.addEventListener(`click`, (e) => {
@@ -280,7 +287,26 @@ optElems.import.addEventListener(`click`, (e) => {
 });
 
 optElems.export.addEventListener(`click`, (e) => {
-  // TODO
+  if (state.exportElem != null) state.exportElem.remove();
+  if (state.exportURL != null) URL.revokeObjectURL(state.exportURL);
+
+  const newOptions = getOptionsFromUI();
+
+  const file = new File(
+    [ JSON.stringify(newOptions) ],
+    `acc-options.json`,
+    { type: `application/json` }
+  );
+
+  state.exportURL = URL.createObjectURL(file);
+
+  const a = document.createElement(`a`);
+  a.href = state.exportURL;
+  a.download = file.name;
+  a.style.position = `fixed`;
+
+  document.body.appendChild(a);
+  a.click();
 });
 
 // load defaults logic
