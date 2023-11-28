@@ -314,7 +314,3 @@ setupListCreator(newReminderButton, notifRemindersList, (newReminder) => {
 optElems.syncEnabled.addEventListener(`change`, (e) => {
   if (!e.detail) markChanged();
 });
-
-// import/export
-
-// TODO: requires data-writer.js
