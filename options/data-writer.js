@@ -99,12 +99,12 @@ const dataLinks = [
 
 // common functions
 
-function loadOptionsIntoUI(options) {
+function loadOptionsIntoUI(options, triggerChange) {
   console.debug(`loading options into UI: `, options);
 
   const currentElems = getInputElements();
 
-  const triggerChange = new CustomEvent(`change`, { detail: true });
+  const changeEvent = new CustomEvent(`change`, { detail: !triggerChange });
 
   // handles simple inputs like toggle switches, number inputs, etc 
   for (const link of dataLinks) {
@@ -117,27 +117,55 @@ function loadOptionsIntoUI(options) {
     const backTarget = backAccessor.pop();
     const backElement = backAccessor.reduce((o, i) => o[i], options);
 
-    // apply value from options to UI element
-    frontendElement[frontTarget] = backElement[backTarget];
-    // trigger "change" event manually
-    frontendElement.dispatchEvent(triggerChange);
+    // update and dispatch event only if necessary
+    const frontValue = frontendElement[frontTarget];
+    const backValue = backElement[backTarget];
+
+    console.debug(link, parseInt(frontValue), frontValue, backValue)
+
+    const isEqualNumber = parseInt(frontValue) === backValue;
+    const isEqualGeneric = frontValue === backValue;
+
+    if (frontendElement.type === `number` ? !isEqualNumber : !isEqualGeneric) {
+      // apply value from options to UI element
+      frontendElement[frontTarget] = backElement[backTarget];
+      // trigger "change" event manually
+      frontendElement.dispatchEvent(changeEvent);
+    }
   }
 
   // special handler for list creators
   const listCreators = document.querySelectorAll(`.list-creator`);
-  for (const listCreator of listCreators) {
+  mainLoop: for (const listCreator of listCreators) {
     const list = listCreator.querySelector(`ul`);
     const template = listCreator.querySelector(`ul > li:first-child`);
     const extras = listCreator.querySelectorAll(`ul > li:not(:first-child)`);
 
-    // remove all except first item
-    for (const item of extras) {
-      item.remove();
-    }
-
     if (listCreator.id === `hostnames-list`) {
-      for (let i = 0; i < options.hostnamesList.length; i++) {
-        const hostname = options.hostnamesList[i];
+      // check if changes need to be made
+      const listData = options.hostnamesList;
+      // AAAAAGGGHHH I FUCKING HATE NODELISTS WHY CANT YOU JUST USE ARRAYS YOU FUCKING PIECE OF SHIT FUCK YOU
+      const currentData = Array.from(listCreator.querySelectorAll(`ul > li input[type="text"]`));
+      const result = currentData.filter((elem) => listData.includes(elem.value));
+
+      console.debug(
+        `hostnames-list unchanged check: `,
+        result.length,
+        listData.length,
+        currentData.length,
+        listData,
+        currentData
+      );
+
+      if (result.length === listData.length && result.length === currentData.length) continue mainLoop;
+
+      // remove all except first item
+      for (const item of extras) {
+        item.remove();
+      }
+
+      for (let i = 0; i < listData.length; i++) {
+        const hostname = listData[i];
 
         let target;
         if (i > 0) {
@@ -149,13 +177,43 @@ function loadOptionsIntoUI(options) {
         }
         
         target.value = hostname;
-        target.dispatchEvent(triggerChange);
+        target.dispatchEvent(changeEvent);
       }
     }
 
     if (listCreator.id === `reminders-list`) {
-      for (let i = 0; i < options.notifications.reminders.length; i++) {
-        const reminder = options.notifications.reminders[i];
+      // check if changes need to be made
+      const listData = options.notifications.reminders;
+      // AAAAAGGGHHH I FUCKING HATE NODELISTS WHY CANT YOU JUST USE ARRAYS YOU FUCKING PIECE OF SHIT FUCK YOU
+      const currentData = Array.from(listCreator.querySelectorAll(`ul > li`));
+      const result = currentData.filter((elem) => listData.some((item) => {
+        const frontUnits = parseInt(elem.querySelector(`input[type="number"]`).value);
+        const frontUnitType = elem.querySelector(`select.time-type`).value;
+        const backUnits = parseInt(item.units);
+
+        console.debug(backUnits, frontUnits, item.unitType, frontUnitType);
+
+        return (backUnits === frontUnits && item.unitType === frontUnitType);
+      }));
+
+      console.debug(
+        `reminders-list unchanged check: `,
+        result.length,
+        listData.length,
+        currentData.length,
+        listData,
+        currentData
+      );
+
+      if (result.length === listData.length && result.length === currentData.length) continue mainLoop;
+
+      // remove all except first item
+      for (const item of extras) {
+        item.remove();
+      }
+
+      for (let i = 0; i < listData.length; i++) {
+        const reminder = listData[i];
 
         let targetUnits;
         let targetUnitType;
@@ -172,8 +230,8 @@ function loadOptionsIntoUI(options) {
         targetUnits.value = reminder.units;
         targetUnitType.value = reminder.unitType;
 
-        targetUnits.dispatchEvent(triggerChange);
-        targetUnitType.dispatchEvent(triggerChange);
+        targetUnits.dispatchEvent(changeEvent);
+        targetUnitType.dispatchEvent(changeEvent);
       }
     }
   }
@@ -230,7 +288,7 @@ browser.storage.local.get(`syncEnabled`).then((results) => {
 
   state.storageRepo.get().then((opts) => {
     console.debug(opts);
-    loadOptionsIntoUI(opts);
+    loadOptionsIntoUI(opts, false);
 
     // small delay to let the UI animations to catch up
     setTimeout(() => {
@@ -278,7 +336,7 @@ optElems.discard.addEventListener(`click`, (e) => {
 
   startLoading();
   state.storageRepo.get().then((opts) => {
-    loadOptionsIntoUI(opts);
+    loadOptionsIntoUI(opts, false);
 
     // small delay to let the UI animations to catch up
     setTimeout(() => {
@@ -291,7 +349,34 @@ optElems.discard.addEventListener(`click`, (e) => {
 // import/export logic
 
 optElems.import.addEventListener(`click`, (e) => {
-  // TODO
+  const input = state.fs.importElem ?? document.createElement(`input`);
+  input.type = `file`;
+  input.accept = `.json,application/json`
+  
+  if (state.fs.importElem == null) {
+    input.addEventListener(`change`, (e) => {
+      if (input.files.length === 0) return;
+
+      startLoading();
+
+      const reader = new FileReader();
+      reader.addEventListener(`load`, (e2) => {
+        const data = e2.target.result;
+        const options = JSON.parse(data);
+
+        loadOptionsIntoUI(options, true);
+
+        // small delay to let the UI animations to catch up
+        setTimeout(() => {
+          stopLoading();
+        }, 300);
+      });
+
+      reader.readAsText(input.files[0]);
+    });
+  }
+
+  input.click();
 });
 
 optElems.export.addEventListener(`click`, (e) => {
@@ -320,6 +405,5 @@ optElems.export.addEventListener(`click`, (e) => {
 // load defaults logic
 
 optElems.loadDefaults.addEventListener(`click`, (e) => {
-  loadOptionsIntoUI({...defaultOptionsSync, ...defaultOptionsLocal});
-  markChanged();
+  loadOptionsIntoUI({...defaultOptionsSync, ...defaultOptionsLocal}, true);
 });
