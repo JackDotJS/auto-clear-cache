@@ -282,6 +282,26 @@ optElems.neverConfirm.addEventListener(`change`, (e) => {
 
 // enable notifications
 
+optElems.notifications.enabled.addEventListener(`change`, (e) => {
+  if (e.target.checked && !e.detail) {
+    // immediately cancel so we can check perms first
+    e.target.checked = false;
+    startLoading();
+
+    browser.permissions.request({
+      permissions: [ `notifications` ]
+    }).then((granted) => {
+      stopLoading();
+      if (granted) {
+        // *now* we can mark as checked
+        e.target.checked = true;
+        // also dispatch the change event again so linked elements update normally
+        e.target.dispatchEvent(new CustomEvent(`change`, { detail: true }));
+      }
+    });
+  }
+});
+
 setupToggleable(
   optElems.notifications.success.parentElement,
   optElems.notifications.enabled

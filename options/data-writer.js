@@ -373,6 +373,8 @@ optElems.import.addEventListener(`click`, (e) => {
         const data = e2.target.result;
         const options = JSON.parse(data);
 
+        // TODO: future conversion logic should go here
+
         loadOptionsIntoUI(options, true);
 
         // small delay to let the UI animations to catch up
