@@ -69,3 +69,53 @@ table td:last-of-type {
 table tr:not(:last-of-type) > td {
   border-bottom: 1px solid var(--dark-color);
 }
+
+#will-confirm {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#will-confirm > span {
+  width: auto;
+  height: 1.5em;
+  aspect-ratio: 1 / 1;
+  display: inline-block;
+  position: relative;
+}
+
+#will-confirm > span:before,
+#will-confirm > span:after {
+  content: "";
+  display: block;
+}
+
+#will-confirm.true > span:after {
+  width: 30%;
+  height: 60%;
+  margin-top: 3%;
+  margin-left: 28%;
+  border-style: solid;
+  border-color: var(--toggle-color);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+#will-confirm.false > span:before {
+  position: absolute;
+  width: 85%;
+  height: 3px;
+  top: 50%;
+  left: 50%;
+  background-color: var(--error-color);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+#will-confirm.false > span:after {
+  position: absolute;
+  width: 85%;
+  height: 3px;
+  top: 50%;
+  left: 50%;
+  background-color: var(--error-color);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}

@@ -14,6 +14,7 @@
   --link-hover: #309eff;
   --toggle-color: #56A22F;
   --toggle-hover: #81d358;
+  --error-color: #df2727;
   --ease-out-func: cubic-bezier(0, 0.55, 0.45, 1);
 }
 

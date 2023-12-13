@@ -59,3 +59,15 @@ getNextRemovalDate().then(result => {
 
   timeLeftElem.innerHTML = string;
 });
+
+storageRepo.get(`neverConfirm`).then(result => {
+  willConfirmElem.querySelector(`span`).innerHTML = ``;
+
+  if (result.neverConfirm) {
+    willConfirmElem.classList.add(`false`);
+    willConfirmElem.classList.remove(`true`);
+  } else {
+    willConfirmElem.classList.add(`true`);
+    willConfirmElem.classList.remove(`false`);
+  }
+});
