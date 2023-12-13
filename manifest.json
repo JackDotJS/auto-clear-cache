@@ -1,7 +1,7 @@
 {
   "name": "Auto Clear Cache",
   "version": "1.0",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "description": "Automatically clears your browsing data on a regular basis.",
   "homepage_url": "https://github.com/JackDotJS/auto-clear-cache",
   "author": "JackDotJS",
@@ -11,7 +11,8 @@
   },
   "permissions": [
     "browsingData",
-    "storage"
+    "storage",
+    "alarms"
   ],
   "optional_permissions": [
     "notifications"
@@ -21,7 +22,7 @@
   	"browser_style": false,
     "open_in_tab": true
   },
-  "browser_action": {
+  "action": {
     "default_popup": "popup-options/popup.html",
     "default_icon": {
       "16": "icon/light_16x.png",
