@@ -23,7 +23,7 @@
     "open_in_tab": true
   },
   "action": {
-    "default_popup": "popup-options/popup.html",
+    "default_popup": "popup/popup.html",
     "default_icon": {
       "16": "icon/light_16x.png",
       "32": "icon/light_32x.png",
