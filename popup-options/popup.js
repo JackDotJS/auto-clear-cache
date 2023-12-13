@@ -1,3 +1,10 @@
+import { getNextRemovalDate } from '../global.js';
+
+let storageRepo = browser.storage.local;
+
+const syncCheck = await browser.storage.local.get(`syncEnabled`);
+if (syncCheck.syncEnabled) storageRepo = browser.storage.sync;
+
 // quick toggle switch
 
 const enabledElem = document.getElementById(`quicktoggle`);
@@ -25,4 +32,30 @@ versionElem.innerHTML = `Version ${manifest.version}`;
 optionsButton.addEventListener(`click`, () => {
   browser.runtime.openOptionsPage();
   window.close();
+});
+
+// current settings display
+
+const timeLeftElem = document.getElementById(`timeLeft`);
+const willConfirmElem = document.getElementById(`will-confirm`);
+
+getNextRemovalDate().then(result => {
+  const now = Date.now();
+  const remaining = result.getTime() - now;
+  let string = ``;
+
+  const year = (1000 * 60 * 60 * 24 * 365);
+  const month = (1000 * 60 * 60 * 24 * 30);
+  const week = (1000 * 60 * 60 * 24 * 7);
+  const day = (1000 * 60 * 60 * 24);
+
+  if (remaining > year) string = `${Math.round(remaining / year)} years`;
+  else if (remaining > month) string = `${Math.round(remaining / month)} months`;
+  else if (remaining > week) string = `${Math.round(remaining / week)} weeks`;
+  else if (remaining > day) string = `${Math.round(remaining / day)} days`;
+  else string = `less than 1 day`;
+
+  console.debug(result.toUTCString());
+
+  timeLeftElem.innerHTML = string;
 });

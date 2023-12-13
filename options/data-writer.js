@@ -1,5 +1,5 @@
 import { getInputElements, startLoading, stopLoading, markChanged } from './options.js';
-import { defaultOptionsSync, defaultOptionsLocal } from '../defaultOptions.js'
+import { defaultOptionsSync, defaultOptionsLocal } from '../global.js'
 
 const optElems = getInputElements();
 
@@ -118,15 +118,17 @@ function loadOptionsIntoUI(options, triggerChange) {
     const backElement = backAccessor.reduce((o, i) => o[i], options);
 
     // update and dispatch event only if necessary
-    const frontValue = frontendElement[frontTarget];
+    let frontValue = frontendElement[frontTarget];
     const backValue = backElement[backTarget];
+
+    if (frontendElement.type === `number`) {
+      // this is fucking stupid
+      frontValue = parseInt(frontValue);
+    }
 
     console.debug(link, parseInt(frontValue), frontValue, backValue)
 
-    const isEqualNumber = parseInt(frontValue) === backValue;
-    const isEqualGeneric = frontValue === backValue;
-
-    if (frontendElement.type === `number` ? !isEqualNumber : !isEqualGeneric) {
+    if (frontValue !== backValue) {
       // apply value from options to UI element
       frontendElement[frontTarget] = backElement[backTarget];
       // trigger "change" event manually
@@ -250,7 +252,14 @@ function getOptionsFromUI() {
     const backTarget = backAccessor.pop();
     const backElement = backAccessor.reduce((obj, key) => obj[key] = obj[key] || {}, options);
 
-    backElement[backTarget] = frontendElement[frontTarget];
+    let frontValue = frontendElement[frontTarget];
+
+    if (frontendElement.type === `number`) {
+      // this is fucking stupid
+      frontValue = parseInt(frontValue);
+    }
+
+    backElement[backTarget] = frontValue;
   }
 
   const listCreators = document.querySelectorAll(`.list-creator`);

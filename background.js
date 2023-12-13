@@ -1,4 +1,4 @@
-import { defaultOptionsSync, defaultOptionsLocal } from './defaultOptions.js'
+import { defaultOptionsSync, defaultOptionsLocal } from './global.js'
 
 // set up default options if needed
 
