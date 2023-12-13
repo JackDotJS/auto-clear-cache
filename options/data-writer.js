@@ -391,7 +391,7 @@ optElems.import.addEventListener(`click`, (e) => {
 optElems.export.addEventListener(`click`, (e) => {
   if (state.fs.exportURL != null) URL.revokeObjectURL(state.fs.exportURL);
 
-  const newOptions = getOptionsFromUI();
+  const newOptions = {...defaultOptionsSync, ...(getOptionsFromUI())};
 
   const file = new File(
     [ JSON.stringify(newOptions) ],
