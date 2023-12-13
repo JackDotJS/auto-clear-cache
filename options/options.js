@@ -228,6 +228,11 @@ setupTimeUnitInput(
   optElems.interval.unitType
 );
 
+optElems.interval.timeSync.addEventListener(`change`, (e) => {
+  if (!e.detail) markChanged();
+  if (isNaN(e.target.valueAsNumber)) e.target.valueAsNumber = new Date().getTime();
+});
+
 // browser data types
 
 for (const dataType of Object.keys(optElems.dataTypes)) {

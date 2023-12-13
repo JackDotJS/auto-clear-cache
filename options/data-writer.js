@@ -414,5 +414,8 @@ optElems.export.addEventListener(`click`, (e) => {
 // load defaults logic
 
 optElems.loadDefaults.addEventListener(`click`, (e) => {
-  loadOptionsIntoUI({...defaultOptionsSync, ...defaultOptionsLocal}, true);
+  const defaults = {...defaultOptionsSync, ...defaultOptionsLocal}
+
+  defaults.interval.timeSync = new Date().getTime();
+  loadOptionsIntoUI(defaults, true);
 });
