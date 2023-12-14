@@ -94,3 +94,18 @@ export async function getNextRemovalDate() {
 
   return nextRemoval;
 }
+
+// may need to expand for others like edge and opera? not sure yet
+export function getBrowserType() {
+  const ua = navigator.userAgent;
+  let result = null;
+
+  if (ua.includes(`Firefox`)) {
+    result = `firefox`; // based
+  } else if (ua.includes(`Chrome`)) {
+    result = `chromium`; // cringe
+  }
+
+  console.debug(`browserType`, result);
+  return result;
+}

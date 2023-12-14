@@ -1,3 +1,4 @@
+import { getBrowserType } from '../global.js'
 import { state } from './data-writer.js';
 
 export function getInputElements() {
@@ -202,6 +203,31 @@ function setupListCreator(addItemButton, listElem, newItemFunc) {
     listElem.appendChild(newItem);
   });
 }
+
+// platform check
+// due to https://bugzilla.mozilla.org/show_bug.cgi?id=1573659,
+// combined with chromes whining about the background.scripts property
+// in manifest.json, all browser cross-compatibility is *completely*
+// impossible right now.
+//
+// thanks, web standards!
+
+// const browserType = getBrowserType();
+
+// if (browserType !== `firefox`) {
+//   const ffonlyElems = document.querySelectorAll(`.firefox-only`);
+
+//   for (const elem of ffonlyElems) {
+//     elem.classList.add(`disabled`);
+//     elem.setAttribute(`aria-hidden`, `true`);
+//     //elem.setAttribute(`tabindex`, `-1`);
+
+//     const subDisabled = elem.querySelectorAll(`.disabled`);
+//     for (const dElem of subDisabled) {
+//       dElem.classList.remove(`disabled`);
+//     }
+//   }
+// }
 
 // extension version info
 
