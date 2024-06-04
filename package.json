@@ -1,0 +1,19 @@
+{
+  "name": "@jackdotjs/auto-clear-cache",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.9.5",
+    "vite": "^4.5.3",
+    "vite-plugin-solid": "^2.5.0"
+  },
+  "dependencies": {
+    "solid-js": "^1.8.16",
+    "vite-plugin-web-extension": "^4.1.4"
+  }
+}
