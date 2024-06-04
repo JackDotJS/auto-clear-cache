@@ -6,7 +6,10 @@ export default defineConfig({
   plugins: [
     solidPlugin(),
     webExtension({
-      browser: "firefox"
+      browser: "firefox",
+      additionalInputs: [
+        "src/welcome.html"
+      ]
     })
   ]
 });

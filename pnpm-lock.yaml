@@ -11,8 +11,14 @@ dependencies:
   vite-plugin-web-extension:
     specifier: ^4.1.4
     version: 4.1.4
+  webextension-polyfill:
+    specifier: ^0.12.0
+    version: 0.12.0
 
 devDependencies:
+  '@types/webextension-polyfill':
+    specifier: ^0.10.7
+    version: 0.10.7
   typescript:
     specifier: ^4.9.5
     version: 4.9.5
@@ -555,6 +561,10 @@ packages:
     dependencies:
       undici-types: 5.26.5
     dev: false
+
+  /@types/webextension-polyfill@0.10.7:
+    resolution: {integrity: sha512-10ql7A0qzBmFB+F+qAke/nP1PIonS0TXZAOMVOxEUsm+lGSW6uwVcISFNa0I4Oyj0884TZVWGGMIWeXOVSNFHw==}
+    dev: true
 
   /adm-zip@0.5.13:
     resolution: {integrity: sha512-4U51tTl9J8UVEcuKGr6zRzY95tWoAa9l+ureGBNmsfleszjZblm5NyEEL/ZQxkhi86co5mZhSvL2T7gkZ6feYQ==}
@@ -2216,6 +2226,10 @@ packages:
 
   /webextension-polyfill@0.10.0:
     resolution: {integrity: sha512-c5s35LgVa5tFaHhrZDnr3FpQpjj1BB+RXhLTYUxGqBVN460HkbM8TBtEqdXWbpTKfzwCcjAZVF7zXCYSKtcp9g==}
+    dev: false
+
+  /webextension-polyfill@0.12.0:
+    resolution: {integrity: sha512-97TBmpoWJEE+3nFBQ4VocyCdLKfw54rFaJ6EVQYLBCXqCIpLSZkwGgASpv4oPt9gdKCJ80RJlcmNzNn008Ag6Q==}
     dev: false
 
   /when@3.7.7:
