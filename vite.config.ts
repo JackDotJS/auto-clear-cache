@@ -8,7 +8,8 @@ export default defineConfig({
     webExtension({
       browser: "firefox",
       additionalInputs: [
-        "src/welcome.html"
+        "src/welcome.html",
+        "src/welcome/index.tsx"
       ]
     })
   ]

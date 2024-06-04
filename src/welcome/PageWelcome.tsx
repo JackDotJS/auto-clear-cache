@@ -1,13 +1,11 @@
-import { type Component } from 'solid-js';
-
 import '../global.css';
 
 const PageWelcome = () => {
   return (
     <>
       <header>
-        <img id="logo-light" src="../icon/light_256x.png" />
-        <img id="logo-dark" src="../icon/dark_256x.png" />
+        <img id="logo-light" src="../../icon/light_256x.png" />
+        <img id="logo-dark" src="../../icon/dark_256x.png" />
         <h1>Auto Clear Cache</h1>
         <footer>
           <span id="ext-version">Version ...</span>
