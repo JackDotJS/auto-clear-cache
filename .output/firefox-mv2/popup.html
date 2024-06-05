@@ -2,10 +2,14 @@
 
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  <script type="module" src="http://localhost:3000/@vite/client"></script>
+
+  <meta charset="utf-8">
   <!-- <script type="module" src="popup.js"></script> -->
-  <link rel="stylesheet" href="../globalstyle.css" />
-  <link rel="stylesheet" href="popup.css" />
+  <link rel="stylesheet" href="http://localhost:3000/entrypoints/globalstyle.css">
+  <link rel="stylesheet" href="http://localhost:3000/entrypoints/popup/popup.css">
+
+  <!-- TODO: https://wxt.dev/guide/directory-structure/entrypoints/popup.html -->  <script type="module" crossorigin="" src="/chunks/reload-html-AmsfsAFu.js"></script>
 </head>
 
 <body>
@@ -20,7 +24,7 @@
   <main>
     <label class="toggle">
       <span role="presentation">Enabled</span>
-      <input id="quicktoggle" type="checkbox" autocomplete="off"/>
+      <input id="quicktoggle" type="checkbox" autocomplete="off">
       <label for="quicktoggle" style="width: 4rem; height: 2rem;"></label>
     </label>
     <table>

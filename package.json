@@ -1,5 +1,7 @@
 {
   "name": "@jackdotjs/auto-clear-cache",
+  "description": "Automatically clears your browsing data on a regular basis.",
+  "homepage": "https://github.com/JackDotJS/auto-clear-cache",
   "private": true,
   "type": "module",
   "version": "1.0.0",

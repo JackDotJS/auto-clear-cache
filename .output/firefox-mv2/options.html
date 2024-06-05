@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="en" class="busy" aria-hidden="true">
+<head>
+  <script type="module" src="http://localhost:3000/@vite/client"></script>
+
+  <title>Options | Auto Clear Cache</title>
+  <meta charset="utf-8">
+  <!-- <script type="module" src="options.js"></script> -->
+  <link rel="stylesheet" href="http://localhost:3000/entrypoints/globalstyle.css">
+  <link rel="stylesheet" href="http://localhost:3000/entrypoints/options/options.css">
+
+  <!-- TODO: https://wxt.dev/guide/directory-structure/entrypoints/options.html -->  <script type="module" crossorigin="" src="/chunks/reload-html-AmsfsAFu.js"></script>
+</head>
+
+<body>
+  <header>
+    <img id="logo-light" src="../icon/light_256x.png">
+    <img id="logo-dark" src="../icon/dark_256x.png">
+    <h1>Auto Clear Cache</h1>
+    <footer>
+      <span id="ext-version">Version ...</span>
+      <div id="links">
+        <a href="https://github.com/JackDotJS/auto-clear-cache">GitHub</a>
+        <a href="https://jackdotjs.github.io/">My Website</a>
+      </div>
+    </footer>
+    <div class="button-column responsive">
+      <button id="save-button" disabled autocomplete="off">Save Changes</button>
+      <button id="discard-button" disabled autocomplete="off">Discard Changes</button>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>Behavior</h2>
+      <div id="interval">
+        Clear browser data every
+        <input type="number" id="interval-units" min="1" max="999" value="1" autocomplete="off">
+        <select id="interval-type" class="time-type">
+          <option value="day">day</option>
+          <option value="week">week</option>
+          <option value="month">month</option>
+          <option value="year">year</option>
+        </select>
+        starting on
+        <input id="timesync" type="date" autocomplete="off">
+      </div>
+      <div id="datatype-select" class="grouped">
+        <span>Data types to remove:</span>
+        <div class="checkbox-grid">
+          <label>
+            <input id="datatype-cache" type="checkbox" autocomplete="off">
+            <label for="datatype-cache"></label>
+            Cache
+          </label>
+          <label>
+            <input id="datatype-cookies" type="checkbox" autocomplete="off">
+            <label for="datatype-cookies"></label>
+            Cookies
+          </label>
+          <label>
+            <input id="datatype-downloads" type="checkbox" autocomplete="off">
+            <label for="datatype-downloads"></label>
+            Downloads
+          </label>
+          <label>
+            <input id="datatype-formdata" type="checkbox" autocomplete="off">
+            <label for="datatype-formdata"></label>
+            Form Data
+          </label>
+          <label>
+            <input id="datatype-history" type="checkbox" autocomplete="off">
+            <label for="datatype-history"></label>
+            History
+          </label>
+          <label>
+            <input id="datatype-localstorage" type="checkbox" autocomplete="off">
+            <label for="datatype-localstorage"></label>
+            Local Storage
+          </label>
+          <label>
+            <input id="datatype-passwords" type="checkbox" autocomplete="off">
+            <label for="datatype-passwords"></label>
+            Passwords
+          </label>
+        </div>
+      </div>
+      <div class="grouped">
+        <label class="toggle">
+          <span role="presentation">Only clear recent data (not applicable to browser cache)</span>
+          <input id="clearrecent" type="checkbox" autocomplete="off">
+          <label for="clearrecent" aria-hidden="true"></label>
+        </label>
+        <div id="data-clear-range" class="disabled">
+          Clear data added within the last
+          <input type="number" id="clear-range-units" min="1" max="999" value="1" autocomplete="off">
+          <select id="clear-range-type" class="time-type">
+            <option value="day">day</option>
+            <option value="week">week</option>
+            <option value="month">month</option>
+            <option value="year">year</option>
+          </select>
+        </div>
+      </div>
+      <div class="grouped firefox-only">
+        <label class="toggle">
+          <span role="presentation">Only clear data from specific websites</span>
+          <input id="usehostnames" type="checkbox" autocomplete="off">
+          <label for="usehostnames" aria-hidden="true"></label>
+        </label>
+        <div id="hostnames-list" class="list-creator disabled">
+          <span>Note: Hostnames must be exact. No wildcards (*).</span>
+          <ul>
+            <li>
+              <input type="text" placeholder="https://" autocomplete="off">
+              <button autocomplete="off"></button>
+            </li>
+          </ul>
+          <button autocomplete="off">Add Hostname</button>
+        </div>
+      </div>
+      <label class="toggle">
+        <span role="presentation">Never ask for confirmation before clearing <b>(NOT RECOMMENDED)</b></span>
+        <input id="no-confirm" type="checkbox" autocomplete="off">
+        <label for="no-confirm" aria-hidden="true"></label>
+      </label>
+    </section>
+
+    <section>
+      <h2>Notifications</h2>
+      <label class="toggle">
+        <span role="presentation">Enable Notifications</span>
+        <input id="notif-enabled" type="checkbox" autocomplete="off">
+        <label for="notif-enabled" aria-hidden="true"></label>
+      </label>
+      <label class="toggle disabled">
+        <span role="presentation">Data successfully cleared</span>
+        <input id="notif-success" type="checkbox" autocomplete="off">
+        <label for="notif-success" aria-hidden="true"></label>
+      </label>
+      <label class="toggle disabled">
+        <span role="presentation">An error occurred, preventing data removal</span>
+        <input id="notif-error" type="checkbox" autocomplete="off">
+        <label for="notif-error" aria-hidden="true"></label>
+      </label>
+      <div class="grouped">
+        <label class="toggle disabled">
+          <span role="presentation">Upcoming data removal reminders</span>
+          <input id="notif-reminder" type="checkbox" autocomplete="off">
+          <label for="notif-reminder" aria-hidden="true"></label>
+        </label>
+        <div id="reminders-list" class="list-creator disabled">
+          <ul>
+            <li>
+              Remind me
+              <input type="number" min="1" max="999" value="1" autocomplete="off">
+              <select class="time-type">
+                <option value="day">day</option>
+                <option value="week">week</option>
+                <option value="month">month</option>
+                <option value="year">year</option>
+              </select>
+              before removal
+              <button autocomplete="off"></button>
+            </li>
+          </ul>
+          <button autocomplete="off">Add Reminder</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Backup/Restore</h2>
+      <label class="toggle">
+        <span role="presentation">Use Cloud Sync</span>
+        <input id="sync-toggle" type="checkbox" autocomplete="off">
+        <label for="sync-toggle" aria-hidden="true"></label>
+      </label>
+      <div class="button-row">
+        <button id="import-button" autocomplete="off">Import From File</button>
+        <button id="export-button" autocomplete="off">Export To File</button>
+      </div>
+      <div class="button-row">
+        <button id="load-defaults" autocomplete="off">Load Default Options</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
