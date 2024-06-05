@@ -1,6 +1,6 @@
 {
-  "name": "@jackdotjs/auto-clear-cache",
-  "description": "Automatically clears your browsing data on a regular basis.",
+  "name": "auto-clear-cache",
+  "description": "Clean your browsing data regularly with minimal effort.",
   "homepage": "https://github.com/JackDotJS/auto-clear-cache",
   "private": true,
   "type": "module",
@@ -14,7 +14,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/webextension-polyfill": "^0.10.7",
     "typescript": "^4.9.5",
     "vite-plugin-solid": "^2.5.0",
     "wxt": "^0.18.4"
