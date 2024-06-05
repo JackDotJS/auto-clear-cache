@@ -1,0 +1,55 @@
+header {
+  display: flex;
+}
+
+.largeHeader {
+  flex-direction: column;
+  align-items: center;
+}
+
+.smallHeader {
+  gap: 1rem;
+  flex-direction: row;
+  align-items: center;
+}
+
+.smallHeader > .logo {
+  width: 8rem;
+}
+
+.smallHeader .version {
+  text-align: left;
+}
+
+.logo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem;
+  height: auto;
+  aspect-ratio: 1 / 1;
+}
+
+.logo > * {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.title {
+  margin: 0;
+}
+
+.version {
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.extlinks {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}

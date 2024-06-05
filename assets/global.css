@@ -18,6 +18,25 @@
   --ease-out-func: cubic-bezier(0, 0.55, 0.45, 1);
 }
 
+/* Dark Theme */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --light-color: #503016;
+    --light-hover: #724623;
+    --dark-color: #F9EBBB;
+    --dark-hover: #FFF;
+    --light-color-inverse: #F9EBBB;
+    --light-hover-inverse: #FFF;
+    --dark-color-inverse: #503016;
+    --dark-hover-inverse: #724623;
+    --list-bg-color: #F9EBBB10;
+    --list-bg-alt-color: #F9EBBB10;
+    --link-color: #3296D3;
+    --link-hover: #7bc7f5;
+  }
+}
+
 /* General Rules */
 
 * {
@@ -39,9 +58,20 @@
 }
 
 html {
+  display: flex;
+  margin: 3rem;
+  justify-content: center;
   background-color: var(--light-color);
   color: var(--dark-color);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 64rem;
+  margin: 0;
 }
 
 .disabled, button:disabled {
@@ -405,31 +435,4 @@ input[type="number"] {
   display: none;
   pointer-events: none;
   user-select: none;
-}
-
-/* Dark Theme */
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --light-color: #503016;
-    --light-hover: #724623;
-    --dark-color: #F9EBBB;
-    --dark-hover: #FFF;
-    --light-color-inverse: #F9EBBB;
-    --light-hover-inverse: #FFF;
-    --dark-color-inverse: #503016;
-    --dark-hover-inverse: #724623;
-    --list-bg-color: #F9EBBB10;
-    --list-bg-alt-color: #F9EBBB10;
-    --link-color: #3296D3;
-    --link-hover: #7bc7f5;
-  }
-
-  #logo-dark {
-    display: none;
-  }
-
-  #logo-light {
-    display: initial;
-  }
 }
