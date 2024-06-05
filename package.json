@@ -1,21 +1,23 @@
 {
   "name": "@jackdotjs/auto-clear-cache",
+  "private": true,
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite build --watch --mode development",
-    "build": "vite build"
+    "dev": "wxt",
+    "build": "wxt build",
+    "zip": "wxt zip",
+    "compile": "tsc --noEmit",
+    "postinstall": "wxt prepare"
   },
   "license": "MIT",
   "devDependencies": {
     "@types/webextension-polyfill": "^0.10.7",
     "typescript": "^4.9.5",
-    "vite": "^4.5.3",
-    "vite-plugin-solid": "^2.5.0"
+    "vite-plugin-solid": "^2.5.0",
+    "wxt": "^0.18.4"
   },
   "dependencies": {
-    "solid-js": "^1.8.16",
-    "vite-plugin-web-extension": "^4.1.4",
-    "webextension-polyfill": "^0.12.0"
+    "solid-js": "^1.8.16"
   }
 }
